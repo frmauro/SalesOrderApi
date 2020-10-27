@@ -1,5 +1,6 @@
 package com.quark.salesorder.controllers;
 
+import java.net.URI;
 import java.time.Instant;
 
 import java.util.List;
@@ -10,8 +11,12 @@ import com.quark.salesorder.entities.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping(value = "/orders")
@@ -31,6 +36,18 @@ public class OrderController {
     @GetMapping(value = "/{id}")
 	public ResponseEntity<Order> findById(@PathVariable long id){
         var order = new Order(null, "Product 001", Instant.parse("2019-07-20T19:53:07Z"), 1, 1);
+		return ResponseEntity.ok().body(order);
+    }
+    
+
+    @PostMapping
+	public ResponseEntity<Order> insert(@RequestBody Order order){
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(order.getId()).toUri();
+		return ResponseEntity.created(uri).body(order);
+    }
+    
+    @PutMapping(value = "/{id}")
+	public ResponseEntity<Order> update(@PathVariable Long id, @RequestBody Order order){
 		return ResponseEntity.ok().body(order);
 	}
 
