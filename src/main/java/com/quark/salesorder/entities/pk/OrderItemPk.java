@@ -2,11 +2,18 @@ package com.quark.salesorder.entities.pk;
 
 import java.io.Serializable;
 
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import com.quark.salesorder.entities.Order;
 
+@Embeddable
 public class OrderItemPk implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @ManyToOne
+    @JoinColumn(name = "order_id")
     private Order order;
 
     public Order getOrder() {

@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Arrays;
 
+import com.quark.salesorder.dtos.OrderDto;
 import com.quark.salesorder.entities.Order;
 
 import org.springframework.http.ResponseEntity;
@@ -41,14 +42,14 @@ public class OrderController {
     
 
     @PostMapping
-	public ResponseEntity<Order> insert(@RequestBody Order order){
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(order.getId()).toUri();
-		return ResponseEntity.created(uri).body(order);
+	public ResponseEntity<OrderDto> insert(@RequestBody OrderDto dto){
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
+		return ResponseEntity.created(uri).body(dto);
     }
     
     @PutMapping(value = "/{id}")
-	public ResponseEntity<Order> update(@PathVariable Long id, @RequestBody Order order){
-		return ResponseEntity.ok().body(order);
+	public ResponseEntity<OrderDto> update(@PathVariable Long id, @RequestBody OrderDto dto){
+		return ResponseEntity.ok().body(dto);
 	}
 
 

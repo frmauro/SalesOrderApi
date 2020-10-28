@@ -1,47 +1,37 @@
-package com.quark.salesorder.entities;
+package com.quark.salesorder.dtos;
 
 import java.io.Serializable;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.quark.salesorder.entities.pk.OrderItemPk;
-
-@Entity
-@Table(name = "tb_order_item")
-public class OrderItem implements Serializable {
+public class OrderItemDto implements Serializable{
     private static final long serialVersionUID = 1L;
-
-    @EmbeddedId
-	private OrderItemPk id = new OrderItemPk();
-
+    
+    
+	private Integer id;
     private String description;
     private Integer quantity;
     private Double price;
     private Integer productId;
 
-    public OrderItem(){
+    public OrderItemDto(){
     }
 
-    public OrderItem(Order order, String description, Integer quantity, Double price, Integer productId) {
+    public OrderItemDto(String description, Integer quantity, Double price, Integer productId) {
         super();
-        this.setOrder(order);
         this.description = description;
         this.quantity = quantity;
         this.price = price;
         this.productId = productId;
     }
 
-    @JsonIgnore
-	public Order getOrder() {
-		return id.getOrder();
-	}
-	
-	public void setOrder(Order order) {
-		id.setOrder(order);
-	}
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
 
     public String getDescription() {
         return description;
@@ -75,6 +65,5 @@ public class OrderItem implements Serializable {
         this.productId = productId;
     }
 
-    
     
 }

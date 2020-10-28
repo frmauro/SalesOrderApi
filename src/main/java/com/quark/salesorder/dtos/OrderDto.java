@@ -1,45 +1,23 @@
-package com.quark.salesorder.entities;
+package com.quark.salesorder.dtos;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-
-//   ***** OrderStatus - WAITING_PAYMENT(1),PAID(2),SHIPPED(3),DELIVERED(4),CANCELED(5) *******
-
-@Entity
-@Table(name = "tb_order")
-public class Order implements Serializable {
-
+public class OrderDto implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+
     private Integer id;
     private String description;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
-    private Instant moment;
+    private String moment;
     private Integer orderStatus;
-    
     private Integer userId;
-    
-    @OneToMany(mappedBy = "id.order")
-    private Set<OrderItem> items = new HashSet<>();
+    private Set<OrderItemDto> items = new HashSet<>();
 
-    public Order(){
+    public OrderDto(){
     }
 
-    public Order(Integer id, String description, Instant moment, Integer orderStatus, Integer userId) {
+    public OrderDto(Integer id, String description, String moment, Integer orderStatus, Integer userId) {
         super();
         this.id = id;
         this.description = description;
@@ -65,11 +43,11 @@ public class Order implements Serializable {
         this.description = description;
     }
 
-    public Instant getMoment() {
+    public String getMoment() {
         return moment;
     }
 
-    public void setMoment(Instant moment) {
+    public void setMoment(String moment) {
         this.moment = moment;
     }
 
@@ -89,13 +67,12 @@ public class Order implements Serializable {
         this.userId = userId;
     }
 
-    public Set<OrderItem> getItems() {
+    public Set<OrderItemDto> getItems() {
         return items;
     }
 
-    public void setItems(Set<OrderItem> items) {
+    public void setItems(Set<OrderItemDto> items) {
         this.items = items;
     }
-   
     
 }
