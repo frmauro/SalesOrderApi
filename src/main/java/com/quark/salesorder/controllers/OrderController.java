@@ -56,12 +56,12 @@ public class OrderController {
     @PutMapping(value = "/{id}")
 	public ResponseEntity<OrderDto> update(@PathVariable Integer id, @RequestBody OrderDto dto){
         var order = service.findById(id);
-        List<OrderItem> orderItens = new ArrayList<>();
-        orderItens.addAll(order.getItems());
-		return ResponseEntity.ok().body(convertOrderToOrderDto(order, orderItens));
+        order.setOrderStatus(dto.getOrderStatus());
+        service.update(order);
+		return ResponseEntity.ok().body(dto);
     }
     
-
+    //private methods *************************
     private Order convertOrderDtoToOrder(OrderDto dto){
         return new Order(null, dto.getDescription(), Instant.parse("2020-07-20T19:53:07Z"), dto.getOrderStatus(), dto.getUserId());
     }

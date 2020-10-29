@@ -34,6 +34,10 @@ public class OrdemService {
     
     public Order insert(Order obj) {
 		return repository.save(obj);
+    }
+    
+    public Order update(Order entity) {
+			return repository.save(entity);
 	}
 
     public List<OrderItem> insertOrderItemAll(List<OrderItem> items) {
