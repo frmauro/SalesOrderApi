@@ -3,10 +3,10 @@ package com.quark.salesorder.controllers;
 import java.net.URI;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.quark.salesorder.dtos.OrderDto;
+import com.quark.salesorder.dtos.OrderItemDto;
 import com.quark.salesorder.entities.Order;
 import com.quark.salesorder.entities.OrderItem;
 import com.quark.salesorder.services.OrdemService;
@@ -49,12 +49,12 @@ public class OrderController {
         var orderItems = getOrderItems(dto, entity);
         service.insertOrderItemAll(orderItems);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
-        dto.setId(entity.getId());
+        dto = convertOrderToOrderDto(entity, orderItems);
 		return ResponseEntity.created(uri).body(dto);
     }
     
     @PutMapping(value = "/{id}")
-	public ResponseEntity<OrderDto> update(@PathVariable Long id, @RequestBody OrderDto dto){
+	public ResponseEntity<OrderDto> update(@PathVariable Integer id, @RequestBody OrderDto dto){
 		return ResponseEntity.ok().body(dto);
     }
     
@@ -71,6 +71,19 @@ public class OrderController {
         }
         return orderItens;
     }
+
+    private OrderDto convertOrderToOrderDto(Order entity, List<OrderItem> orderItems){
+        var dto = new OrderDto(entity.getId(), entity.getDescription(), entity.getMoment().toString(), entity.getOrderStatus(), entity.getUserId());
+        List<OrderItemDto> orderItensDto = new ArrayList<>();
+        for (var i : orderItems){
+            OrderItemDto orderItemDto = new OrderItemDto(i.getDescription(), i.getQuantity(), i.getPrice(), i.getProductId());
+            orderItemDto.setId(entity.getId());
+            orderItensDto.add(orderItemDto);
+        }
+        dto.getItems().addAll(orderItensDto);
+        return dto;
+    }
+
 
 
 }
