@@ -55,7 +55,10 @@ public class OrderController {
     
     @PutMapping(value = "/{id}")
 	public ResponseEntity<OrderDto> update(@PathVariable Integer id, @RequestBody OrderDto dto){
-		return ResponseEntity.ok().body(dto);
+        var order = service.findById(id);
+        List<OrderItem> orderItens = new ArrayList<>();
+        orderItens.addAll(order.getItems());
+		return ResponseEntity.ok().body(convertOrderToOrderDto(order, orderItens));
     }
     
 
