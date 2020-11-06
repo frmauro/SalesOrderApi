@@ -13,6 +13,7 @@ import com.quark.salesorder.services.OrdemService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,19 +30,21 @@ public class OrderController {
     @Autowired
 	private OrdemService service;
     
+    @CrossOrigin
     @GetMapping
     public ResponseEntity<List<Order>> findAll(){
         List<Order> orders = service.findAll();
         return ResponseEntity.ok().body(orders);
     }
 
+    @CrossOrigin
     @GetMapping(value = "/{id}")
 	public ResponseEntity<Order> findById(@PathVariable Integer id){
         var order = service.findById(id);
 		return ResponseEntity.ok().body(order);
     }
     
-
+    @CrossOrigin
     @PostMapping
 	public ResponseEntity<OrderDto> insert(@RequestBody OrderDto dto){
         var entity = convertOrderDtoToOrder(dto);
@@ -53,6 +56,7 @@ public class OrderController {
 		return ResponseEntity.created(uri).body(dto);
     }
     
+    @CrossOrigin
     @PutMapping(value = "/{id}")
 	public ResponseEntity<OrderDto> update(@PathVariable Integer id, @RequestBody OrderDto dto){
         var order = service.findById(id);
