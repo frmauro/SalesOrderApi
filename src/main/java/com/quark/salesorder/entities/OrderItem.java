@@ -1,21 +1,42 @@
 package com.quark.salesorder.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.EmbeddedId;
+import javax.persistence.CascadeType;
+//import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.quark.salesorder.entities.pk.OrderItemPk;
+//import com.fasterxml.jackson.annotation.JsonIgnore;
+//import com.quark.salesorder.entities.pk.OrderItemPk;
 
 @Entity
 @Table(name = "tb_order_item")
 public class OrderItem implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @EmbeddedId
-	private OrderItemPk id = new OrderItemPk();
+    //@EmbeddedId
+    //private OrderItemPk id = new OrderItemPk();
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    
+    
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                CascadeType.PERSIST,
+                CascadeType.MERGE
+            },
+            mappedBy = "items")
+    private Set<Order> orders = new HashSet<>();;
 
     private String description;
     private Integer quantity;
@@ -25,23 +46,31 @@ public class OrderItem implements Serializable {
     public OrderItem(){
     }
 
-    public OrderItem(Order order, String description, Integer quantity, Double price, Integer productId) {
+    public OrderItem(String description, Integer quantity, Double price, Integer productId) {
         super();
-        this.setOrder(order);
+        //this.setOrder(order);
         this.description = description;
         this.quantity = quantity;
         this.price = price;
         this.productId = productId;
     }
 
-    @JsonIgnore
-	public Order getOrder() {
-		return id.getOrder();
-	}
+    //@JsonIgnore
+	//public Order getOrder() {
+	//	return id.getOrder();
+	//}
 	
-	public void setOrder(Order order) {
-		id.setOrder(order);
-	}
+	//public void setOrder(Order order) {
+	//	id.setOrder(order);
+    //}
+    
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getDescription() {
         return description;
@@ -73,6 +102,14 @@ public class OrderItem implements Serializable {
 
     public void setProductId(Integer productId) {
         this.productId = productId;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
     

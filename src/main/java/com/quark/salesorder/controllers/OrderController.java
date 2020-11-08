@@ -49,9 +49,14 @@ public class OrderController {
 	public ResponseEntity<OrderDto> insert(@RequestBody OrderDto dto){
         var entity = convertOrderDtoToOrder(dto);
         service.insert(entity);
-        var orderItems = getOrderItems(dto, entity);
-        service.insertOrderItemAll(orderItems);
+
+        for (var i : dto.getItems()){
+            OrderItem orderItem = new OrderItem(i.getDescription(), i.getQuantity(), i.getPrice(), i.getProductId());
+            service.insertOrderItem(orderItem);
+        }
+        
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
+        var orderItems = getOrderItems(dto);
         dto = convertOrderToOrderDto(entity, orderItems);
 		return ResponseEntity.created(uri).body(dto);
     }
@@ -70,10 +75,10 @@ public class OrderController {
         return new Order(null, dto.getDescription(), Instant.parse("2020-07-20T19:53:07Z"), dto.getOrderStatus(), dto.getUserId());
     }
 
-    private List<OrderItem> getOrderItems(OrderDto dto, Order entity){
+    private List<OrderItem> getOrderItems(OrderDto dto){
         List<OrderItem> orderItens = new ArrayList<>();
         for (var i : dto.getItems()){
-            OrderItem orderItem = new OrderItem(entity, i.getDescription(), i.getQuantity(), i.getPrice(), i.getProductId());
+            OrderItem orderItem = new OrderItem(i.getDescription(), i.getQuantity(), i.getPrice(), i.getProductId());
             orderItens.add(orderItem);
         }
         return orderItens;

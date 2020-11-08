@@ -44,4 +44,7 @@ public class OrdemService {
 		return orderItemrepository.saveAll(items);
 	}
 
+    public OrderItem insertOrderItem(OrderItem item) {
+            return orderItemrepository.save(item);
+	}
 }
