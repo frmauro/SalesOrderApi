@@ -6,7 +6,7 @@ public class OrderItemDto implements Serializable{
     private static final long serialVersionUID = 1L;
     
     
-	private Integer id;
+	private Long id;
     private String description;
     private Integer quantity;
     private Double price;
@@ -24,11 +24,11 @@ public class OrderItemDto implements Serializable{
     }
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 

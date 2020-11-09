@@ -49,15 +49,9 @@ public class OrderController {
 	public ResponseEntity<OrderDto> insert(@RequestBody OrderDto dto){
         var entity = convertOrderDtoToOrder(dto);
         service.insert(entity);
-
-        for (var i : dto.getItems()){
-            OrderItem orderItem = new OrderItem(i.getDescription(), i.getQuantity(), i.getPrice(), i.getProductId());
-            service.insertOrderItem(orderItem);
-        }
         
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
-        var orderItems = getOrderItems(dto);
-        dto = convertOrderToOrderDto(entity, orderItems);
+        dto = convertOrderToOrderDto(entity);
 		return ResponseEntity.created(uri).body(dto);
     }
     
@@ -72,7 +66,15 @@ public class OrderController {
     
     //private methods *************************
     private Order convertOrderDtoToOrder(OrderDto dto){
-        return new Order(null, dto.getDescription(), Instant.parse("2020-07-20T19:53:07Z"), dto.getOrderStatus(), dto.getUserId());
+        var entity = new Order(dto.getDescription(), Instant.parse("2020-07-20T19:53:07Z"), dto.getOrderStatus(), dto.getUserId());
+        var items = dto.getItems();
+
+        for (var i : items){
+            OrderItem orderItem = new OrderItem(i.getDescription(), i.getQuantity(), i.getPrice(), i.getProductId());
+            orderItem.getOrders().add(entity);
+            entity.getItems().add(orderItem);
+        }
+        return entity;
     }
 
     private List<OrderItem> getOrderItems(OrderDto dto){
@@ -84,10 +86,12 @@ public class OrderController {
         return orderItens;
     }
 
-    private OrderDto convertOrderToOrderDto(Order entity, List<OrderItem> orderItems){
+    private OrderDto convertOrderToOrderDto(Order entity){
         var dto = new OrderDto(entity.getId(), entity.getDescription(), entity.getMoment().toString(), entity.getOrderStatus(), entity.getUserId());
         List<OrderItemDto> orderItensDto = new ArrayList<>();
-        for (var i : orderItems){
+        var items = entity.getItems();
+
+        for (var i : items){
             OrderItemDto orderItemDto = new OrderItemDto(i.getDescription(), i.getQuantity(), i.getPrice(), i.getProductId());
             orderItemDto.setId(entity.getId());
             orderItensDto.add(orderItemDto);

@@ -26,9 +26,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
     private String description;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
@@ -51,9 +52,8 @@ public class Order implements Serializable {
     public Order(){
     }
 
-    public Order(Integer id, String description, Instant moment, Integer orderStatus, Integer userId) {
+    public Order(String description, Instant moment, Integer orderStatus, Integer userId) {
         super();
-        this.id = id;
         this.description = description;
         this.moment = moment;
         this.orderStatus = orderStatus;
@@ -61,11 +61,11 @@ public class Order implements Serializable {
     }
     
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 

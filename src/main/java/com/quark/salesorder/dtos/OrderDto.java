@@ -7,7 +7,7 @@ import java.util.Set;
 public class OrderDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
+    private Long id;
     private String description;
     private String moment;
     private Integer orderStatus;
@@ -17,7 +17,7 @@ public class OrderDto implements Serializable {
     public OrderDto(){
     }
 
-    public OrderDto(Integer id, String description, String moment, Integer orderStatus, Integer userId) {
+    public OrderDto(Long id, String description, String moment, Integer orderStatus, Integer userId) {
         super();
         this.id = id;
         this.description = description;
@@ -27,11 +27,11 @@ public class OrderDto implements Serializable {
     }
     
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
