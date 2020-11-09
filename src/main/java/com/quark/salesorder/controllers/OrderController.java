@@ -39,7 +39,7 @@ public class OrderController {
 
     @CrossOrigin
     @GetMapping(value = "/{id}")
-	public ResponseEntity<Order> findById(@PathVariable Integer id){
+	public ResponseEntity<Order> findById(@PathVariable Long id){
         var order = service.findById(id);
 		return ResponseEntity.ok().body(order);
     }
@@ -49,7 +49,7 @@ public class OrderController {
 	public ResponseEntity<OrderDto> insert(@RequestBody OrderDto dto){
         var entity = convertOrderDtoToOrder(dto);
         service.insert(entity);
-        
+
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
         dto = convertOrderToOrderDto(entity);
 		return ResponseEntity.created(uri).body(dto);
@@ -57,7 +57,7 @@ public class OrderController {
     
     @CrossOrigin
     @PutMapping(value = "/{id}")
-	public ResponseEntity<OrderDto> update(@PathVariable Integer id, @RequestBody OrderDto dto){
+	public ResponseEntity<OrderDto> update(@PathVariable Long id, @RequestBody OrderDto dto){
         var order = service.findById(id);
         order.setOrderStatus(dto.getOrderStatus());
         service.update(order);

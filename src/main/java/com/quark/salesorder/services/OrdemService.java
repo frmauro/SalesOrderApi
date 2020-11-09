@@ -24,7 +24,7 @@ public class OrdemService {
         return repository.findAll();
     }
 
-    public Order findById(Integer id) {
+    public Order findById(Long id) {
         Optional<Order> obj = repository.findById(id);
         if (obj.isPresent()) {
             return obj.get();

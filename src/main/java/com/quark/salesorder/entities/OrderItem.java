@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 //import com.quark.salesorder.entities.pk.OrderItemPk;
 
@@ -36,6 +38,7 @@ public class OrderItem implements Serializable {
                 CascadeType.MERGE
             },
             mappedBy = "items")
+    @JsonIgnore            
     private Set<Order> orders = new HashSet<>();;
 
     private String description;
