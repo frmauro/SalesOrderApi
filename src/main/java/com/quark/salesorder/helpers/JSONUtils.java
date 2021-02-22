@@ -9,7 +9,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
- class JSONUtils  {
+ public class JSONUtils  
+ {
 
     private JSONUtils() 
     {
