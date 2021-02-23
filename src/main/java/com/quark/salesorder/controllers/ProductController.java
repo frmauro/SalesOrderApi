@@ -21,10 +21,10 @@ public class ProductController {
 
     @CrossOrigin
     @GetMapping
-    public ResponseEntity<List<ProductDto>> findAll()
+    public ResponseEntity<String> findAll()
             throws JsonParseException, JsonMappingException, InterruptedException, ExecutionException, IOException {
-        List<ProductDto> products = ProductService.getAllProducts();
-        return ResponseEntity.ok().body(products);
+        String productsJson = ProductService.getAllProducts();
+        return ResponseEntity.ok().body(productsJson);
     }
 
 }

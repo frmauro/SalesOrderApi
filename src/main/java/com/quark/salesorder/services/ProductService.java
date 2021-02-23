@@ -30,15 +30,19 @@ public class ProductService {
     private static final String serviceURL = "http://localhost:8087/Product/";
 
     //sending request to retrieve all the products available.
-    public static List<ProductDto> getAllProducts() throws InterruptedException, ExecutionException, JsonParseException, JsonMappingException, IOException
+    public static String getAllProducts() 
+        throws InterruptedException, ExecutionException, JsonParseException, JsonMappingException, 
+        IOException
     {
 
         HttpRequest req = HttpRequest.newBuilder(URI.create(serviceURL)).GET().build();
         CompletableFuture<HttpResponse<String>> response = client.sendAsync(req, BodyHandlers.ofString());
         //response.thenAcceptAsync(res -> res);
 
-        List<ProductDto> products = JSONUtils.convertFromJsonToList(response.get().body(), new TypeReference<List<ProductDto>>() {});
-        return products;
+        //List<ProductDto> products = JSONUtils.convertFromJsonToList(response.get().body(), new TypeReference<List<ProductDto>>() {});
+        String responseJson = response.get().body();
+
+        return responseJson;
     }
     
 }
