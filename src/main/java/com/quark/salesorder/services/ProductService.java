@@ -44,5 +44,18 @@ public class ProductService {
 
         return responseJson;
     }
-    
+
+        //sending request to retrieve all the products available.
+    public static String getProductById(Integer id) 
+      throws InterruptedException, ExecutionException, JsonParseException, JsonMappingException, 
+      IOException
+    {
+        HttpRequest req = HttpRequest.newBuilder(URI.create(serviceURL+id)).GET().build();
+        CompletableFuture<HttpResponse<String>> response = client.sendAsync(req, BodyHandlers.ofString());
+        String responseJson = response.get().body();
+        return responseJson;
+    }
+
+
+
 }

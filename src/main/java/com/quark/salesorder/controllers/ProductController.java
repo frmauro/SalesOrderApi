@@ -12,6 +12,7 @@ import com.quark.salesorder.services.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,5 +27,15 @@ public class ProductController {
         String productsJson = ProductService.getAllProducts();
         return ResponseEntity.ok().body(productsJson);
     }
+
+    @CrossOrigin
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<String> findById(@PathVariable Integer id)
+            throws JsonParseException, JsonMappingException, InterruptedException, ExecutionException, IOException {
+        String productJson = ProductService.getProductById(id);
+        return ResponseEntity.ok().body(productJson);
+    }
+
+
 
 }
