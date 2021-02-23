@@ -45,7 +45,7 @@ public class ProductService {
         return responseJson;
     }
 
-        //sending request to retrieve all the products available.
+    //sending request to retrieve the products by id available.
     public static String getProductById(Integer id) 
       throws InterruptedException, ExecutionException, JsonParseException, JsonMappingException, 
       IOException
@@ -57,5 +57,21 @@ public class ProductService {
     }
 
 
+    //sending request to amount update the products.
+    public static String updateAmount(String productsDto) 
+      throws InterruptedException, ExecutionException, JsonParseException, JsonMappingException, IOException
+    {
+        HttpRequest request = HttpRequest.newBuilder(URI.create(serviceURL))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(productsDto))
+                    .build();
+
+                    CompletableFuture<HttpResponse<String>> response = 
+                            client.sendAsync(request,HttpResponse.BodyHandlers.ofString());
+                            
+                    String result = response.get().body();
+
+        return result;
+    }
 
 }

@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class ProductDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String productId; 
+    private String id; 
     private String description;
     private String amount;
     private String price;
@@ -14,8 +14,8 @@ public class ProductDto implements Serializable {
 
     public ProductDto(){}
 
-    public ProductDto(String productId, String description, String amount, String price, String status) {
-        this.productId = productId;
+    public ProductDto(String id, String description, String amount, String price, String status) {
+        this.id = id;
         this.description = description;
         this.amount = amount;
         this.price = price;
@@ -27,12 +27,12 @@ public class ProductDto implements Serializable {
         return serialVersionUID;
     }
 
-    public String getProductId() {
-        return productId;
+    public String getId() {
+        return id;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDescription() {
