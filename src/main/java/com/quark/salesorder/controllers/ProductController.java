@@ -42,11 +42,12 @@ public class ProductController {
 
     @CrossOrigin
     @PostMapping
-    public ResponseEntity<List<ProductDto>> updateAmount(@RequestBody List<ProductDto> dto) 
+    public ResponseEntity<String> updateAmount(@RequestBody String dto)
+            throws JsonParseException, JsonMappingException, InterruptedException, ExecutionException, IOException 
     {
-        String dtosJson = "";
-        //String result = ProductService.updateAmount(dtosJson);
-        return ResponseEntity.ok().body(dto);
+        String dtosJson = dto;
+        String result = ProductService.updateAmount(dtosJson);
+        return ResponseEntity.ok().body(result);
     }
 
 
