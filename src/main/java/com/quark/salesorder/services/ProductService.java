@@ -62,6 +62,9 @@ public class ProductService {
     public static String updateAmount(String productsDto) 
       throws InterruptedException, ExecutionException, JsonParseException, JsonMappingException, IOException
     {
+
+        //String testePost = "[{'amount':1,'description':'','price':'0','status':'Active','id':1},{'amount':1,'description':'','price':'0','status':'Active','id':2}]";
+
         HttpRequest request = HttpRequest.newBuilder(URI.create(SERVICEURL2))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(productsDto))

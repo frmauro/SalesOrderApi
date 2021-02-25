@@ -44,11 +44,11 @@ public class ProductController {
     @CrossOrigin
     @PostMapping
     public ResponseEntity<List<ProductDto>> updateAmount(@RequestBody List<ProductDto> dtos)
-            throws JsonProcessingException 
+            throws InterruptedException, ExecutionException, IOException 
     {
         String dtosJson = "";
         dtosJson = JSONUtils.covertFromObjectToJson(dtos);
-        //String result = ProductService.updateAmount(dtosJson);
+        String result = ProductService.updateAmount(dtosJson);
         return ResponseEntity.ok().body(dtos);
     }
 
