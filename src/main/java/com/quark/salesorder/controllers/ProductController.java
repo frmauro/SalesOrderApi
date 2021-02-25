@@ -1,6 +1,7 @@
 package com.quark.salesorder.controllers;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -41,7 +42,7 @@ public class ProductController {
 
     @CrossOrigin
     @PostMapping
-    public ResponseEntity<ProductDto> updateAmount(@RequestBody ProductDto dto) 
+    public ResponseEntity<List<ProductDto>> updateAmount(@RequestBody List<ProductDto> dto) 
     {
         String dtosJson = "";
         //String result = ProductService.updateAmount(dtosJson);
