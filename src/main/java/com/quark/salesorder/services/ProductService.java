@@ -27,7 +27,8 @@ public class ProductService {
     }
 
     private static final HttpClient client = HttpClient.newBuilder().version(Version.HTTP_2).build();
-    private static final String serviceURL = "http://localhost:8087/Product/";
+    private static final String SERVICEURL = "http://localhost:8087/Product/";
+    private static final String SERVICEURL2 = "http://localhost:8087/UpdateAmount/";
 
     //sending request to retrieve all the products available.
     public static String getAllProducts() 
@@ -35,7 +36,7 @@ public class ProductService {
         IOException
     {
 
-        HttpRequest req = HttpRequest.newBuilder(URI.create(serviceURL)).GET().build();
+        HttpRequest req = HttpRequest.newBuilder(URI.create(SERVICEURL)).GET().build();
         CompletableFuture<HttpResponse<String>> response = client.sendAsync(req, BodyHandlers.ofString());
         //response.thenAcceptAsync(res -> res);
 
@@ -50,7 +51,7 @@ public class ProductService {
       throws InterruptedException, ExecutionException, JsonParseException, JsonMappingException, 
       IOException
     {
-        HttpRequest req = HttpRequest.newBuilder(URI.create(serviceURL+id)).GET().build();
+        HttpRequest req = HttpRequest.newBuilder(URI.create(SERVICEURL+id)).GET().build();
         CompletableFuture<HttpResponse<String>> response = client.sendAsync(req, BodyHandlers.ofString());
         String responseJson = response.get().body();
         return responseJson;
@@ -61,7 +62,7 @@ public class ProductService {
     public static String updateAmount(String productsDto) 
       throws InterruptedException, ExecutionException, JsonParseException, JsonMappingException, IOException
     {
-        HttpRequest request = HttpRequest.newBuilder(URI.create(serviceURL))
+        HttpRequest request = HttpRequest.newBuilder(URI.create(SERVICEURL2))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(productsDto))
                     .build();

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.quark.salesorder.dtos.ProductDto;
+import com.quark.salesorder.helpers.JSONUtils;
 import com.quark.salesorder.services.ProductService;
 
 import org.springframework.http.ResponseEntity;
@@ -42,12 +43,13 @@ public class ProductController {
 
     @CrossOrigin
     @PostMapping
-    public ResponseEntity<String> updateAmount(@RequestBody String dto)
-            throws JsonParseException, JsonMappingException, InterruptedException, ExecutionException, IOException 
+    public ResponseEntity<List<ProductDto>> updateAmount(@RequestBody List<ProductDto> dtos)
+            throws JsonProcessingException 
     {
-        String dtosJson = dto;
-        String result = ProductService.updateAmount(dtosJson);
-        return ResponseEntity.ok().body(result);
+        String dtosJson = "";
+        dtosJson = JSONUtils.covertFromObjectToJson(dtos);
+        //String result = ProductService.updateAmount(dtosJson);
+        return ResponseEntity.ok().body(dtos);
     }
 
 
