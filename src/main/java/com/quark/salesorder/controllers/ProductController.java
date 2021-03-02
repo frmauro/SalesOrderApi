@@ -1,6 +1,8 @@
 package com.quark.salesorder.controllers;
 
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -20,15 +22,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping(value = "/products")
 public class ProductController {
 
     @CrossOrigin
     @GetMapping
-    public ResponseEntity<String> findAll()
-            throws JsonParseException, JsonMappingException, InterruptedException, ExecutionException, IOException {
+    public ResponseEntity<String> findAll() throws JsonParseException, JsonMappingException, InterruptedException,
+            ExecutionException, IOException, KeyManagementException, NoSuchAlgorithmException {
         String productsJson = ProductService.getAllProducts();
         return ResponseEntity.ok().body(productsJson);
     }
@@ -43,13 +44,13 @@ public class ProductController {
 
     @CrossOrigin
     @PostMapping
-    public ResponseEntity<List<ProductDto>> updateAmount(@RequestBody List<ProductDto> dtos)
+    public ResponseEntity<String> updateAmount(@RequestBody List<ProductDto> dtos)
             throws InterruptedException, ExecutionException, IOException 
     {
         String dtosJson = "";
         dtosJson = JSONUtils.covertFromObjectToJson(dtos);
         String result = ProductService.updateAmount(dtosJson);
-        return ResponseEntity.ok().body(dtos);
+        return ResponseEntity.ok().body(result);
     }
 
 
