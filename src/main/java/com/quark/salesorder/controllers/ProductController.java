@@ -37,7 +37,9 @@ public class ProductController {
     @CrossOrigin
     @GetMapping(value = "/{id}")
     public ResponseEntity<String> findById(@PathVariable Integer id)
-            throws JsonParseException, JsonMappingException, InterruptedException, ExecutionException, IOException {
+            throws JsonParseException, JsonMappingException, InterruptedException, 
+                    ExecutionException, IOException,
+                    KeyManagementException, NoSuchAlgorithmException {
         String productJson = ProductService.getProductById(id);
         return ResponseEntity.ok().body(productJson);
     }
@@ -45,7 +47,8 @@ public class ProductController {
     @CrossOrigin
     @PostMapping
     public ResponseEntity<String> updateAmount(@RequestBody List<ProductDto> dtos)
-            throws InterruptedException, ExecutionException, IOException 
+            throws InterruptedException, ExecutionException, IOException, 
+            KeyManagementException, NoSuchAlgorithmException 
     {
         String dtosJson = "";
         dtosJson = JSONUtils.covertFromObjectToJson(dtos);
