@@ -35,8 +35,11 @@ public class ProductService {
 
     //private static final HttpClient client = HttpClient.newBuilder().version(Version.HTTP_2).build();
 
-     private static final String SERVICEURL = "https://localhost:8087/Product/";
-     private static final String SERVICEURL2 = "https://localhost:8087/UpdateAmount/";
+     private static final String SERVICEURL = "http://product-api/Product/";
+     private static final String SERVICEURL2 = "http://product-api/UpdateAmount/";
+
+      //private static final String SERVICEURL = "http://localhost:8087/Product/";
+      //private static final String SERVICEURL2 = "http://localhost:8087/UpdateAmount/";
 
     //private static final String SERVICEURL = "https://localhost:5001/Product/";
     //private static final String SERVICEURL2 = "https://localhost:5001/UpdateAmount/";
