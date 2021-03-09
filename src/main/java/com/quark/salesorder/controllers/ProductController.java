@@ -5,6 +5,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -46,16 +47,25 @@ public class ProductController {
 
     @CrossOrigin
     @PostMapping
-    public ResponseEntity<String> updateAmount(@RequestBody List<ProductDto> dtos)
+    public ResponseEntity<Integer> updateAmount(@RequestBody List<ProductDto> dtos)
             throws InterruptedException, ExecutionException, IOException, 
             KeyManagementException, NoSuchAlgorithmException 
     {
         String dtosJson = "";
         dtosJson = JSONUtils.covertFromObjectToJson(dtos);
-        String result = ProductService.updateAmount(dtosJson);
+        var result = ProductService.updateAmount(dtosJson);
         return ResponseEntity.ok().body(result);
     }
 
+    @CrossOrigin
+    @PostMapping(value = "/testPost")
+    public ResponseEntity<String> testPost(@RequestBody String dto)
+            throws InterruptedException, ExecutionException, IOException, 
+            KeyManagementException, NoSuchAlgorithmException, TimeoutException 
+    {
+        var result = ProductService.testPost(dto);
+        return ResponseEntity.ok().body(result);
+    }
 
 
 }
