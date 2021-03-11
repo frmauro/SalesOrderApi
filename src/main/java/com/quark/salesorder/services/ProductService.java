@@ -47,7 +47,8 @@ public class ProductService {
 
      private static final String SERVICEURL = "http://product-api/Product/";
      private static final String SERVICEURL2 = "http://product-api/UpdateAmount/";
-     private static final String SERVICEURL3 = "http://product-api/TestPost/";
+     private static final String SERVICEURL3 = "http://product-api/Product/TestPost/";
+     private static final String SERVICEURL4 = "http://product-api/Test/";
 
       //private static final String SERVICEURL = "http://localhost:8087/Product/";
       //private static final String SERVICEURL2 = "http://localhost:8087/UpdateAmount/";
@@ -115,14 +116,14 @@ public class ProductService {
             String requestBody = objectMapper
                             .writerWithDefaultPrettyPrinter()
                             .writeValueAsString(map);
-            
 
             HttpRequest request = HttpRequest.newBuilder(URI.create(SERVICEURL3))
             .header("Content-Type","application/json")
-            .POST(BodyPublishers.ofString(requestBody))
+            .POST(BodyPublishers.ofString("{\"Name\":\"francisco\"}"))
             .build();
 
-            var client = HttpClient.newHttpClient();
+            //var client = HttpClient.newHttpClient();
+            var client = getClient();
 
             //CompletableFuture<String> response = client.sendAsync(request, BodyHandlers.ofString()).thenApply(HttpResponse::body);
 
@@ -139,6 +140,18 @@ public class ProductService {
               //String responseJson = response.get().body();
             return result;//response.get();
    }
+
+
+    // sending request to retrieve all the products available.
+    public static String getTest() throws InterruptedException, ExecutionException, JsonParseException,
+            JsonMappingException, IOException, KeyManagementException, NoSuchAlgorithmException
+    {
+        HttpClient client = getClient();
+        HttpRequest req = HttpRequest.newBuilder(URI.create(SERVICEURL4)).GET().build();
+        CompletableFuture<HttpResponse<String>> response = client.sendAsync(req, BodyHandlers.ofString());
+        return response.get().body();
+    }
+
 
 
     private static HttpClient getClient() throws NoSuchAlgorithmException, KeyManagementException {
