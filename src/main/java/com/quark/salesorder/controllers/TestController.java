@@ -15,14 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/test")
-public class TestController{
+public class TestController {
 
     @CrossOrigin
-    @GetMapping("/listText")
-    public ResponseEntity<String> get() throws InterruptedException, ExecutionException, JsonParseException,
-    JsonMappingException, IOException, KeyManagementException, NoSuchAlgorithmException {
-        String result = "Teste OK";//ProductService.getTest();
-        return ResponseEntity.ok().body(result);
+    @GetMapping
+    public String findAll() {
+        //String result = "Teste OK";//ProductService.getTest();
+        return ResponseEntity.ok().body("Teste OK");
     }
 
 }
