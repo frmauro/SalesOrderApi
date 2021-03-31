@@ -45,12 +45,25 @@ public class ProductService {
 
     //private static final HttpClient client = HttpClient.newBuilder().version(Version.HTTP_2).build();
 
-     private static final String SERVICEURL = "http://product-api/Product/";
-     private static final String SERVICEURL2 = "http://product-api/UpdateAmount/";
-     private static final String SERVICEURL3 = "http://product-api/Product/TestPost/";
-     private static final String SERVICEURL4 = "http://product-api/Test/";
+    // use link to docker container with compose
+    //  private static final String SERVICEURL = "http://product-api/Product/";
+    //  private static final String SERVICEURL2 = "http://product-api/UpdateAmount/";
+    //  private static final String SERVICEURL3 = "http://product-api/Product/TestPost/";
+    //  private static final String SERVICEURL4 = "http://product-api/Test/";
 
-      //private static final String SERVICEURL = "http://localhost:8087/Product/";
+    // use link to docker container to local use
+    //  private static final String SERVICEURL = "https://localhost:5001/Product/";
+    //  private static final String SERVICEURL2 = "https://localhost:5001/UpdateAmount/";
+    //  private static final String SERVICEURL3 = "https://localhost:5001/Product/TestPost/";
+    //  private static final String SERVICEURL4 = "https://localhost:5001/Test/";
+
+     // use to docker container without compose
+     private static final String SERVICEURL = "http://salesproductapi/Product/";
+     private static final String SERVICEURL2 = "http://salesproductapi/UpdateAmount/";
+     private static final String SERVICEURL3 = "http://salesproductapi/Product/TestPost/";
+     private static final String SERVICEURL4 = "http://salesproductapi/Test/";
+
+     //private static final String SERVICEURL = "http://localhost:8087/Product/";
       //private static final String SERVICEURL2 = "http://localhost:8087/UpdateAmount/";
 
     //private static final String SERVICEURL = "https://localhost:5001/Product/";

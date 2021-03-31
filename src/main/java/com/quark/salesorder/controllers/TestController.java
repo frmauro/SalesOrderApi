@@ -1,3 +1,5 @@
+package com.quark.salesorder.controllers;
+
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -13,15 +15,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
-@RequestMapping(value = "/test")
+@RequestMapping(value = "/tests")
 public class TestController {
 
     @CrossOrigin
     @GetMapping
-    public String findAll() {
-        //String result = "Teste OK";//ProductService.getTest();
-        return ResponseEntity.ok().body("Teste OK");
+    public ResponseEntity<String> getMethodName() throws JsonParseException, JsonMappingException, KeyManagementException, NoSuchAlgorithmException, InterruptedException, ExecutionException, IOException {
+        String result = ProductService.getTest();
+        return ResponseEntity.ok().body(result);
+        //return "Test method via get !!!";
     }
 
 }
