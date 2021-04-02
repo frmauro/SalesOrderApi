@@ -11,6 +11,7 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,11 +58,17 @@ public class ProductService {
     //  private static final String SERVICEURL3 = "https://localhost:5001/Product/TestPost/";
     //  private static final String SERVICEURL4 = "https://localhost:5001/Test/";
 
-     // use to docker container without compose
-     private static final String SERVICEURL = "http://salesproductapi/Product/";
-     private static final String SERVICEURL2 = "http://salesproductapi/UpdateAmount/";
-     private static final String SERVICEURL3 = "http://salesproductapi/Product/TestPost/";
-     private static final String SERVICEURL4 = "http://salesproductapi/Test/";
+     // use from container to docker container without compose
+    //  private static final String SERVICEURL = "http://salesproductapi/Product/";
+    //  private static final String SERVICEURL2 = "http://salesproductapi/UpdateAmount/";
+    //  private static final String SERVICEURL3 = "http://salesproductapi/Product/TestPost/";
+    //  private static final String SERVICEURL4 = "http://salesproductapi/Test/";
+
+     // use from local to docker container without compose
+     private static final String SERVICEURL = "http://localhost:8087/Product/";
+     private static final String SERVICEURL2 = "http://localhost:8087/UpdateAmount/";
+     private static final String SERVICEURL3 = "http://localhost:8087/Product/TestPost/";
+     private static final String SERVICEURL4 = "http://localhost:8087/Test/";
 
      //private static final String SERVICEURL = "http://localhost:8087/Product/";
       //private static final String SERVICEURL2 = "http://localhost:8087/UpdateAmount/";
@@ -111,6 +118,7 @@ public class ProductService {
                      
                     CompletableFuture<HttpResponse<String>> response = 
                         client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+
                     return response.get().statusCode();//response.get().body();
     }
 
@@ -122,32 +130,33 @@ public class ProductService {
             KeyManagementException, NoSuchAlgorithmException, TimeoutException
    {
             
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("Name", "teste");
+            // json formatted data
+            String json = new StringBuilder()
+            .append("{")
+            .append("\"Name\":\"chico\"")
+            .append("}").toString();
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            String requestBody = objectMapper
-                            .writerWithDefaultPrettyPrinter()
-                            .writeValueAsString(map);
-
-            HttpRequest request = HttpRequest.newBuilder(URI.create(SERVICEURL3))
-            .header("Content-Type","application/json")
-            .POST(BodyPublishers.ofString("{\"Name\":\"francisco\"}"))
+            HttpRequest request = HttpRequest.newBuilder()
+            .POST(HttpRequest.BodyPublishers.ofString(json))
+            .uri(URI.create(SERVICEURL4))
+            .setHeader("User-Agent", "Java 11 HttpClient Bot")
+            .header("Content-Type","text/plain; charset=utf-8")
             .build();
 
             //var client = HttpClient.newHttpClient();
             var client = getClient();
 
-            //CompletableFuture<String> response = client.sendAsync(request, BodyHandlers.ofString()).thenApply(HttpResponse::body);
+            CompletableFuture<HttpResponse<String>> asyncResponse = client.sendAsync(request, BodyHandlers.ofString());
+            var response = asyncResponse.get();
 
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            //HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             String result = "Version: " + response.version();
             result += "\nURI: " + response.uri();
             result += "\nStatus code: " + response.statusCode();
             result += "\nHeaders: " + response.headers();
             result += "\n Body: " + response.body();
-            result += "\n jsonRequestBody: " + requestBody;
+            //result += "\n jsonRequestBody: " + requestBody;
 
             //CompletableFuture<HttpResponse<String>> response = client.sendAsync(request, BodyHandlers.ofString());
               //String responseJson = response.get().body();
@@ -165,7 +174,10 @@ public class ProductService {
         return response.get().body();
     }
 
-
+    private static final HttpClient httpClient = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_2)
+                .connectTimeout(Duration.ofSeconds(10))
+                .build();
 
     private static HttpClient getClient() throws NoSuchAlgorithmException, KeyManagementException {
         SSLContext sslContext = SSLContext.getInstance("TLS");
