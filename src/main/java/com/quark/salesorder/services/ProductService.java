@@ -106,25 +106,20 @@ public class ProductService {
 
 
     //sending request to amount update the products.
-    public static Integer updateAmount(String productsDto) 
+    public static String updateAmount(String productsDto) 
       throws InterruptedException, ExecutionException, JsonParseException, 
              JsonMappingException, IOException,
              KeyManagementException, NoSuchAlgorithmException
     {
 
-        HttpRequest request = HttpRequest.newBuilder(URI.create(SERVICEURL2))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(productsDto))
-                    .build();
-
-                    //HttpClient client = HttpClient.newBuilder().version(Version.HTTP_2).build();
-
-                    var client = getClient();
-                     
-                    CompletableFuture<HttpResponse<String>> response = 
-                        client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
-
-                    return response.get().statusCode();//response.get().body();
+            RestTemplate restTemplate = new RestTemplate();
+            //String requestJson = "{\"Name\":\"Chico\"}";
+            String requestJson = "[{\"amount\":1,\"description\":\"\",\"price\":\"0\",\"status\":\"Active\",\"id\":1}]";
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
+            String result = restTemplate.postForObject(SERVICEURL2, entity, String.class);
+            return result;
     }
 
 

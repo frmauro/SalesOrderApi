@@ -47,7 +47,7 @@ public class ProductController {
 
     @CrossOrigin
     @PostMapping
-    public ResponseEntity<Integer> updateAmount(@RequestBody List<ProductDto> dtos)
+    public ResponseEntity<String> updateAmount(@RequestBody List<ProductDto> dtos)
             throws InterruptedException, ExecutionException, IOException, 
             KeyManagementException, NoSuchAlgorithmException 
     {
