@@ -29,7 +29,12 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import net.minidev.json.JSONObject;
 
@@ -130,37 +135,15 @@ public class ProductService {
             KeyManagementException, NoSuchAlgorithmException, TimeoutException
    {
             
-            // json formatted data
-            String json = new StringBuilder()
-            .append("{")
-            .append("\"Name\":\"chico\"")
-            .append("}").toString();
+            RestTemplate restTemplate = new RestTemplate();
+            String requestJson = "{\"Name\":\"Chico\"}";
 
-            HttpRequest request = HttpRequest.newBuilder()
-            .POST(HttpRequest.BodyPublishers.ofString(json))
-            .uri(URI.create(SERVICEURL4))
-            .setHeader("User-Agent", "Java 11 HttpClient Bot")
-            .header("Content-Type","text/plain; charset=utf-8")
-            .build();
-
-            //var client = HttpClient.newHttpClient();
-            var client = getClient();
-
-            CompletableFuture<HttpResponse<String>> asyncResponse = client.sendAsync(request, BodyHandlers.ofString());
-            var response = asyncResponse.get();
-
-            //HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            String result = "Version: " + response.version();
-            result += "\nURI: " + response.uri();
-            result += "\nStatus code: " + response.statusCode();
-            result += "\nHeaders: " + response.headers();
-            result += "\n Body: " + response.body();
-            //result += "\n jsonRequestBody: " + requestBody;
-
-            //CompletableFuture<HttpResponse<String>> response = client.sendAsync(request, BodyHandlers.ofString());
-              //String responseJson = response.get().body();
-            return result;//response.get();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
+            String result = restTemplate.postForObject(SERVICEURL4, entity, String.class);
+            
+            return result;
    }
 
 
