@@ -111,11 +111,9 @@ public class ProductService {
              JsonMappingException, IOException,
              KeyManagementException, NoSuchAlgorithmException
     {
-
             // String amount = "1";
             // String id = "1";
             // String requestJson = "[{\"amount\":" + amount + ",\"description\":\"\",\"price\":\"0\",\"status\":\"Active\",\"id\":" + id + "}]";
-
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
