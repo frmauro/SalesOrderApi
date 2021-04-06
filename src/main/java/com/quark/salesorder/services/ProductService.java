@@ -75,11 +75,6 @@ public class ProductService {
      private static final String SERVICEURL3 = "http://localhost:8087/Product/TestPost/";
      private static final String SERVICEURL4 = "http://localhost:8087/Test/";
 
-     //private static final String SERVICEURL = "http://localhost:8087/Product/";
-      //private static final String SERVICEURL2 = "http://localhost:8087/UpdateAmount/";
-
-    //private static final String SERVICEURL = "https://localhost:5001/Product/";
-    //private static final String SERVICEURL2 = "https://localhost:5001/UpdateAmount/";
 
     // sending request to retrieve all the products available.
     public static String getAllProducts() throws InterruptedException, ExecutionException, JsonParseException,
