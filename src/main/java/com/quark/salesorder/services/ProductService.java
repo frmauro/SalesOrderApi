@@ -64,16 +64,16 @@ public class ProductService {
     //  private static final String SERVICEURL4 = "https://localhost:5001/Test/";
 
      // use from container to docker container without compose
-    //  private static final String SERVICEURL = "http://salesproductapi/Product/";
-    //  private static final String SERVICEURL2 = "http://salesproductapi/UpdateAmount/";
-    //  private static final String SERVICEURL3 = "http://salesproductapi/Product/TestPost/";
-    //  private static final String SERVICEURL4 = "http://salesproductapi/Test/";
+     private static final String SERVICEURL = "http://salesproductapi/Product/";
+     private static final String SERVICEURL2 = "http://salesproductapi/UpdateAmount/";
+     private static final String SERVICEURL3 = "http://salesproductapi/Product/TestPost/";
+     private static final String SERVICEURL4 = "http://salesproductapi/Test/";
 
      // use from local to docker container without compose
-     private static final String SERVICEURL = "http://localhost:8087/Product/";
-     private static final String SERVICEURL2 = "http://localhost:8087/UpdateAmount/";
-     private static final String SERVICEURL3 = "http://localhost:8087/Product/TestPost/";
-     private static final String SERVICEURL4 = "http://localhost:8087/Test/";
+    //  private static final String SERVICEURL = "http://localhost:8087/Product/";
+    //  private static final String SERVICEURL2 = "http://localhost:8087/UpdateAmount/";
+    //  private static final String SERVICEURL3 = "http://localhost:8087/Product/TestPost/";
+    //  private static final String SERVICEURL4 = "http://localhost:8087/Test/";
 
 
     // sending request to retrieve all the products available.
