@@ -112,12 +112,14 @@ public class ProductService {
              KeyManagementException, NoSuchAlgorithmException
     {
 
+            // String amount = "1";
+            // String id = "1";
+            // String requestJson = "[{\"amount\":" + amount + ",\"description\":\"\",\"price\":\"0\",\"status\":\"Active\",\"id\":" + id + "}]";
+
             RestTemplate restTemplate = new RestTemplate();
-            //String requestJson = "{\"Name\":\"Chico\"}";
-            String requestJson = "[{\"amount\":1,\"description\":\"\",\"price\":\"0\",\"status\":\"Active\",\"id\":1}]";
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
+            HttpEntity<String> entity = new HttpEntity<String>(productsDto,headers);
             String result = restTemplate.postForObject(SERVICEURL2, entity, String.class);
             return result;
     }
