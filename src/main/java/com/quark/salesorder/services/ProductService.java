@@ -52,10 +52,10 @@ public class ProductService {
     //private static final HttpClient client = HttpClient.newBuilder().version(Version.HTTP_2).build();
 
     // use link to docker container with compose
-    //  private static final String SERVICEURL = "http://product-api/Product/";
-    //  private static final String SERVICEURL2 = "http://product-api/UpdateAmount/";
-    //  private static final String SERVICEURL3 = "http://product-api/Product/TestPost/";
-    //  private static final String SERVICEURL4 = "http://product-api/Test/";
+     private static final String SERVICEURL = "http://product-api/Product/";
+     private static final String SERVICEURL2 = "http://product-api/UpdateAmount/";
+     private static final String SERVICEURL3 = "http://product-api/Product/TestPost/";
+     private static final String SERVICEURL4 = "http://product-api/Test/";
 
     // use link to docker container to local use
     //  private static final String SERVICEURL = "https://localhost:5001/Product/";
@@ -64,10 +64,10 @@ public class ProductService {
     //  private static final String SERVICEURL4 = "https://localhost:5001/Test/";
 
      // use from container to docker container without compose
-     private static final String SERVICEURL = "http://salesproductapi/Product/";
-     private static final String SERVICEURL2 = "http://salesproductapi/UpdateAmount/";
-     private static final String SERVICEURL3 = "http://salesproductapi/Product/TestPost/";
-     private static final String SERVICEURL4 = "http://salesproductapi/Test/";
+    //  private static final String SERVICEURL = "http://salesproductapi/Product/";
+    //  private static final String SERVICEURL2 = "http://salesproductapi/UpdateAmount/";
+    //  private static final String SERVICEURL3 = "http://salesproductapi/Product/TestPost/";
+    //  private static final String SERVICEURL4 = "http://salesproductapi/Test/";
 
      // use from local to docker container without compose
     //  private static final String SERVICEURL = "http://localhost:8087/Product/";
