@@ -1,0 +1,51 @@
+package com.quark.salesorder.services;
+
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.ExecutionException;
+
+import com.fasterxml.jackson.databind.JsonMappingException;
+
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+
+
+@Service
+public class UserService {
+
+
+    // use link to docker container with compose
+     //private static final String SERVICEURL = "http://product-api/user/";
+
+    // use link to docker container to local use
+    //  private static final String SERVICEURL = "https://localhost:5001/user/";
+
+     // use from container to docker container without compose
+    //  private static final String SERVICEURL = "http://salesproductapi/user/";
+
+     // use from container to docker container without compose
+      private static final String SERVICEURL = "http://localhost:8088/user/";
+    
+
+
+     //sending request to amount update the products.
+    public static String getByEmailAndPassword(String email, String password) 
+      throws InterruptedException, ExecutionException, JsonMappingException, IOException,
+             KeyManagementException, NoSuchAlgorithmException
+    {
+            String requestJson = "[{\"_id\":\"\",\"name\":\"\",\"email\":" + email + ",\"password\":" + password + ",\"status\":\"\",\"token\":\"\",\"userType\":\"\" }]";
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
+            String result = restTemplate.postForObject(SERVICEURL, entity, String.class);
+            return result;
+    }
+
+}
