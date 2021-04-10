@@ -35,11 +35,11 @@ public class UserService {
 
 
      //sending request to amount update the products.
-    public static String getByEmailAndPassword(String email, String password) 
+    public static String getByEmailAndPassword(String dtoJson) 
       throws InterruptedException, ExecutionException, JsonMappingException, IOException,
              KeyManagementException, NoSuchAlgorithmException
     {
-            String requestJson = "[{\"_id\":\"\",\"name\":\"\",\"email\":" + email + ",\"password\":" + password + ",\"status\":\"\",\"token\":\"\",\"userType\":\"\" }]";
+            String requestJson = dtoJson;//"[{\"_id\":\"\",\"name\":\"\",\"email\":" + email + ",\"password\":" + password + ",\"status\":\"\",\"token\":\"\",\"userType\":\"\" }]";
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);

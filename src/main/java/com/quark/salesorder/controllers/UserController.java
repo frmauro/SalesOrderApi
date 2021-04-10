@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutionException;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.quark.salesorder.dtos.UserDto;
+import com.quark.salesorder.helpers.JSONUtils;
 import com.quark.salesorder.services.UserService;
 
 import org.springframework.http.ResponseEntity;
@@ -23,13 +24,12 @@ public class UserController {
 
     @CrossOrigin
     @PostMapping
-    public ResponseEntity<String> getByEmailAndPassword(@RequestBody UserDto dto) 
-        throws JsonMappingException, KeyManagementException, NoSuchAlgorithmException, 
-               InterruptedException, ExecutionException, IOException
+    public ResponseEntity<String> returnByEmailAndPassword(@RequestBody UserDto dto) 
+        throws KeyManagementException, NoSuchAlgorithmException, InterruptedException, ExecutionException, IOException
     {
-        String email = dto.getEmail();
-        String password = dto.getPassword();
-        var result = UserService.getByEmailAndPassword(email, password);
+        String dtoJson = "";
+        dtoJson = JSONUtils.covertFromObjectToJson(dto);
+        var result = UserService.getByEmailAndPassword(dtoJson);
         return ResponseEntity.ok().body(result);
     }
     
