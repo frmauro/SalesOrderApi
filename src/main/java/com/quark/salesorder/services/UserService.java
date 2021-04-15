@@ -21,13 +21,10 @@ public class UserService {
 
 
     // use link to docker container with compose
-     //private static final String SERVICEURL = "http://product-api/user/";
-
-    // use link to docker container to local use
-    //  private static final String SERVICEURL = "https://localhost:5001/user/";
+     private static final String SERVICEURL = "http://user-api:8088/user/";
 
      // use from container to docker container without compose
-      private static final String SERVICEURL = "http://salesusernode:8088/user/";
+      //private static final String SERVICEURL = "http://salesusernode:8088/user/";
 
      // use from vscode to docker container without compose
       //private static final String SERVICEURL = "http://localhost:8088/user/";
