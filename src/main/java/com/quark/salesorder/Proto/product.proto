@@ -1,6 +1,7 @@
 syntax = "proto3";
 
-package SalesProductApi;
+option java_multiple_files = true;
+package com.quark.salesorder;
 
 // The product service definition.
 service ProductServiceProto {
