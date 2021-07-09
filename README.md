@@ -13,3 +13,7 @@ docker run -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=123 --name mysqlserver -d
 ## command to acess and execute commands into mysql in container linux
 docker exec -it mysqlserver mysql -u root -p
 
+## link to commands line mysql linux
+https://linuxize.com/post/how-to-create-a-mysql-database/
+
+

@@ -10,6 +10,7 @@ import java.util.concurrent.TimeoutException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.quark.salesorder.ServiceGRPC.ProductServiceGRPC;
 import com.quark.salesorder.dtos.ProductDto;
 import com.quark.salesorder.helpers.JSONUtils;
 import com.quark.salesorder.services.ProductService;
@@ -27,13 +28,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/products")
 public class ProductController {
 
+    // @CrossOrigin
+    // @GetMapping
+    // public ResponseEntity<String> findAll() throws JsonParseException, JsonMappingException, InterruptedException,
+    //         ExecutionException, IOException, KeyManagementException, NoSuchAlgorithmException {
+    //     String productsJson = ProductService.getAllProducts();
+    //     return ResponseEntity.ok().body(productsJson);
+    // }
+
+
     @CrossOrigin
     @GetMapping
-    public ResponseEntity<String> findAll() throws JsonParseException, JsonMappingException, InterruptedException,
-            ExecutionException, IOException, KeyManagementException, NoSuchAlgorithmException {
-        String productsJson = ProductService.getAllProducts();
+    public ResponseEntity<String> findAll()  {
+        String productsJson = ProductServiceGRPC.getAllProducts();
         return ResponseEntity.ok().body(productsJson);
     }
+
 
     @CrossOrigin
     @GetMapping(value = "/{id}")
