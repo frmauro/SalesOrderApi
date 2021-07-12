@@ -14,9 +14,9 @@ import com.quark.salesorder.ServiceGRPC.ProductServiceGRPC;
 public class ProductServiceGRPC {
     
     public static String getAllProducts() {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 4999).usePlaintext().build();
-        //com.quark.salesorder.ProductServiceProto.ProductServiceProtoBlockingStub. stub = com.quark.salesorder.ProductServiceProto.newBlockingStub(channel);
-        //HelloReply helloReply = stub.sayHello(HelloRequest.newBuilder().setName("Francisco").build());
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 5000).usePlaintext().build();
+        SalesProductApi.ProductServiceProtoGrpc.ProductServiceProtoBlockingStub stub = SalesProductApi.ProductServiceProtoGrpc.newBlockingStub(channel);
+        SalesProductApi.ItemResponse response = stub.getProducts(SalesProductApi.Empty.newBuilder().build());//.newBuilder().setName("Francisco").build());
         channel.shutdown();
         return "OK";
     }
