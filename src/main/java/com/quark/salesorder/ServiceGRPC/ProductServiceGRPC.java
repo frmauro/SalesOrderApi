@@ -13,10 +13,18 @@ import com.quark.salesorder.ServiceGRPC.ProductServiceGRPC;
 @Service
 public class ProductServiceGRPC {
     
-    public static String getAllProducts() {
+    public static SalesProductApi.ItemResponse getAllProducts() {
         ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 5000).usePlaintext().build();
         SalesProductApi.ProductServiceProtoGrpc.ProductServiceProtoBlockingStub stub = SalesProductApi.ProductServiceProtoGrpc.newBlockingStub(channel);
         SalesProductApi.ItemResponse response = stub.getProducts(SalesProductApi.Empty.newBuilder().build());//.newBuilder().setName("Francisco").build());
+        channel.shutdown();
+        return response;
+    }
+
+    public static String getById(Integer id) {
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 5000).usePlaintext().build();
+        SalesProductApi.ProductServiceProtoGrpc.ProductServiceProtoBlockingStub stub = SalesProductApi.ProductServiceProtoGrpc.newBlockingStub(channel);
+        SalesProductApi.ProductResponse response = stub.getProduct(SalesProductApi.ProductId.newBuilder().setId(id).build());
         channel.shutdown();
         return "OK";
     }

@@ -10,6 +10,7 @@ import java.util.concurrent.TimeoutException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.google.protobuf.util.JsonFormat;
 import com.quark.salesorder.ServiceGRPC.ProductServiceGRPC;
 import com.quark.salesorder.dtos.ProductDto;
 import com.quark.salesorder.helpers.JSONUtils;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/products")
 public class ProductController {
 
+    // ****** Http method *****
     // @CrossOrigin
     // @GetMapping
     // public ResponseEntity<String> findAll() throws JsonParseException, JsonMappingException, InterruptedException,
@@ -37,23 +39,40 @@ public class ProductController {
     // }
 
 
+    // ****** grpc method *****
     @CrossOrigin
     @GetMapping
-    public ResponseEntity<String> findAll()  {
-        String productsJson = ProductServiceGRPC.getAllProducts();
-        return ResponseEntity.ok().body(productsJson);
+    public ResponseEntity<String> findAll() throws IOException  {
+        SalesProductApi.ItemResponse productsJson = ProductServiceGRPC.getAllProducts();
+        String jsonString = "";
+        String json = JsonFormat.printer()
+        .preservingProtoFieldNames()
+        .includingDefaultValueFields()
+        .print(productsJson);
+        return ResponseEntity.ok().body(json);
     }
 
+    // ****** Http method *****
+    // @CrossOrigin
+    // @GetMapping(value = "/{id}")
+    // public ResponseEntity<String> findById(@PathVariable Integer id)
+    //         throws JsonParseException, JsonMappingException, InterruptedException, 
+    //                 ExecutionException, IOException,
+    //                 KeyManagementException, NoSuchAlgorithmException {
+    //     String productJson = ProductService.getProductById(id);
+    //     return ResponseEntity.ok().body(productJson);
+    // }
 
+
+    // ****** grpc method *****
     @CrossOrigin
     @GetMapping(value = "/{id}")
-    public ResponseEntity<String> findById(@PathVariable Integer id)
-            throws JsonParseException, JsonMappingException, InterruptedException, 
-                    ExecutionException, IOException,
-                    KeyManagementException, NoSuchAlgorithmException {
-        String productJson = ProductService.getProductById(id);
+    public ResponseEntity<String> findById(@PathVariable Integer id) {
+        String productJson = ProductServiceGRPC.getById(id);
         return ResponseEntity.ok().body(productJson);
     }
+
+
 
     @CrossOrigin
     @PostMapping
