@@ -21,12 +21,12 @@ public class ProductServiceGRPC {
         return response;
     }
 
-    public static String getById(Integer id) {
+    public static SalesProductApi.ProductResponse getById(Integer id) {
         ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 5000).usePlaintext().build();
         SalesProductApi.ProductServiceProtoGrpc.ProductServiceProtoBlockingStub stub = SalesProductApi.ProductServiceProtoGrpc.newBlockingStub(channel);
         SalesProductApi.ProductResponse response = stub.getProduct(SalesProductApi.ProductId.newBuilder().setId(id).build());
         channel.shutdown();
-        return "OK";
+        return response;
     }
 
 

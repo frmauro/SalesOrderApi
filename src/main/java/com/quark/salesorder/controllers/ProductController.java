@@ -44,7 +44,6 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<String> findAll() throws IOException  {
         SalesProductApi.ItemResponse productsJson = ProductServiceGRPC.getAllProducts();
-        String jsonString = "";
         String json = JsonFormat.printer()
         .preservingProtoFieldNames()
         .includingDefaultValueFields()
@@ -67,9 +66,13 @@ public class ProductController {
     // ****** grpc method *****
     @CrossOrigin
     @GetMapping(value = "/{id}")
-    public ResponseEntity<String> findById(@PathVariable Integer id) {
-        String productJson = ProductServiceGRPC.getById(id);
-        return ResponseEntity.ok().body(productJson);
+    public ResponseEntity<String> findById(@PathVariable Integer id) throws IOException {
+        SalesProductApi.ProductResponse productJson = ProductServiceGRPC.getById(id);
+        String json = JsonFormat.printer()
+        .preservingProtoFieldNames()
+        .includingDefaultValueFields()
+        .print(productJson);
+        return ResponseEntity.ok().body(json);
     }
 
 
