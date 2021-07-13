@@ -56,11 +56,11 @@ public class ProductServiceGRPC {
                 products.addItems(product2);
         //});
 
+        SalesProductApi.ItemUpdateAmount dto = products.build();
+        SalesProductApi.UpdateAmountResponse response = stub.updateAmount(dto);
 
-       // SalesProductApi.ItemUpdateAmount request =  SalesProductApi.ItemUpdateAmount.newBuilder().setItemUpdateAmount();
+        //SalesProductApi.UpdateAmountResponse response = null; 
 
-        //SalesProductApi.UpdateAmountResponse response = stub.UpdateAmount(request.build());
-        SalesProductApi.UpdateAmountResponse response = null; 
         channel.shutdown();
         return response;
     }
