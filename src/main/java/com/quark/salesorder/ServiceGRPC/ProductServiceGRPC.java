@@ -42,19 +42,13 @@ public class ProductServiceGRPC {
         SalesProductApi.ItemUpdateAmount.Builder products = SalesProductApi.ItemUpdateAmount.newBuilder();
 
 
-        //IntStream.range(0, 2).forEach(
-          // iteration -> {
-                final SalesProductApi.UpdateAmountRequest product1 = SalesProductApi.UpdateAmountRequest.newBuilder()
-                .setId(1)
-                .setAmount("1")
-                .build();
-                products.addItems(product1);
-                final SalesProductApi.UpdateAmountRequest product2 = SalesProductApi.UpdateAmountRequest.newBuilder()
-                .setId(2)
-                .setAmount("1")
-                .build();
-                products.addItems(product2);
-        //});
+        for (ProductDto productDto : dtos) {
+            SalesProductApi.UpdateAmountRequest product = SalesProductApi.UpdateAmountRequest.newBuilder()
+            .setId(org.springframework.util.NumberUtils.convertNumberToTargetClass(productDto.getId(), Integer.class))
+            .setAmount(productDto.getAmount().toString())
+            .build();
+            products.addItems(product);
+        }
 
         SalesProductApi.ItemUpdateAmount dto = products.build();
         SalesProductApi.UpdateAmountResponse response = stub.updateAmount(dto);
