@@ -99,7 +99,11 @@ public class ProductController {
         String dtosJson = "";
         //dtosJson = JSONUtils.covertFromObjectToJson(dtos);
         var result = ProductServiceGRPC.updateAmount(dtos);
-        return ResponseEntity.ok().body(dtosJson);
+        String json = JsonFormat.printer()
+        .preservingProtoFieldNames()
+        .includingDefaultValueFields()
+        .print(result);
+        return ResponseEntity.ok().body(json);
     }
 
 
