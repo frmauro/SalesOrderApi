@@ -76,18 +76,33 @@ public class ProductController {
     }
 
 
+    // ****** Http method *****
+    // @CrossOrigin
+    // @PostMapping
+    // public ResponseEntity<String> updateAmount(@RequestBody List<ProductDto> dtos)
+    //         throws InterruptedException, ExecutionException, IOException, 
+    //         KeyManagementException, NoSuchAlgorithmException 
+    // {
+    //     String dtosJson = "";
+    //     dtosJson = JSONUtils.covertFromObjectToJson(dtos);
+    //     var result = ProductService.updateAmount(dtosJson);
+    //     return ResponseEntity.ok().body(result);
+    // }
 
+
+    // ****** grpc method *****
     @CrossOrigin
     @PostMapping
-    public ResponseEntity<String> updateAmount(@RequestBody List<ProductDto> dtos)
-            throws InterruptedException, ExecutionException, IOException, 
-            KeyManagementException, NoSuchAlgorithmException 
+    public ResponseEntity<String> updateAmount(@RequestBody List<ProductDto> dtos)  
+        throws InterruptedException, ExecutionException, IOException 
     {
         String dtosJson = "";
-        dtosJson = JSONUtils.covertFromObjectToJson(dtos);
-        var result = ProductService.updateAmount(dtosJson);
-        return ResponseEntity.ok().body(result);
+        //dtosJson = JSONUtils.covertFromObjectToJson(dtos);
+        var result = ProductServiceGRPC.updateAmount(dtos);
+        return ResponseEntity.ok().body(dtosJson);
     }
+
+
 
     @CrossOrigin
     @PostMapping(value = "/testPost")
