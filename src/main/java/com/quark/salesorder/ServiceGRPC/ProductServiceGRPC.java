@@ -16,9 +16,15 @@ import com.quark.salesorder.dtos.ProductDto;
 
 @Service
 public class ProductServiceGRPC {
+
+    //Local PORT 
+    //private static final Integer PORT = 5000;
+
+    //container PORT 
+    private static final Integer PORT = 9087;
     
     public static SalesProductApi.ItemResponse getAllProducts() {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 5000).usePlaintext().build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", PORT).usePlaintext().build();
         SalesProductApi.ProductServiceProtoGrpc.ProductServiceProtoBlockingStub stub = SalesProductApi.ProductServiceProtoGrpc.newBlockingStub(channel);
         SalesProductApi.ItemResponse response = stub.getProducts(SalesProductApi.Empty.newBuilder().build());//.newBuilder().setName("Francisco").build());
         channel.shutdown();
@@ -26,7 +32,7 @@ public class ProductServiceGRPC {
     }
 
     public static SalesProductApi.ProductResponse getById(Integer id) {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 5000).usePlaintext().build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", PORT).usePlaintext().build();
         SalesProductApi.ProductServiceProtoGrpc.ProductServiceProtoBlockingStub stub = SalesProductApi.ProductServiceProtoGrpc.newBlockingStub(channel);
         SalesProductApi.ProductResponse response = stub.getProduct(SalesProductApi.ProductId.newBuilder().setId(id).build());
         channel.shutdown();
@@ -35,7 +41,7 @@ public class ProductServiceGRPC {
 
 
     public static SalesProductApi.UpdateAmountResponse updateAmount(List<ProductDto> dtos) {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 5000).usePlaintext().build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", PORT).usePlaintext().build();
         SalesProductApi.ProductServiceProtoGrpc.ProductServiceProtoBlockingStub stub = SalesProductApi.ProductServiceProtoGrpc.newBlockingStub(channel);
 
         
