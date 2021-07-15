@@ -20,5 +20,14 @@ https://linuxize.com/post/how-to-create-a-mysql-database/
 curl -X POST -H "Content-Type: application/json" -d '[{"id": 1, "amount": 1, "status": "Active", "price": "200"}]' http://localhost:8080/products/
 
 
+## sequence necessary command maven to put package in container docker
+1  -  "/home/francisco/estudos/java/SalesOrderApi/mvnw" clean -f "/home/francisco/estudos/java/SalesOrderApi/pom.xml"
+2  -  "/home/francisco/estudos/java/SalesOrderApi/mvnw" clean package  -f "/home/francisco/estudos/java/SalesOrderApi/pom.xml"
+3  -  "/home/francisco/estudos/java/SalesOrderApi/mvnw" compile -f "/home/francisco/estudos/java/SalesOrderApi/pom.xml"
+4  -  "/home/francisco/estudos/java/SalesOrderApi/mvnw" package spring-boot:repackage -f "/home/francisco/estudos/java/SalesOrderApi/pom.xml"
+
+
+
+
 
 

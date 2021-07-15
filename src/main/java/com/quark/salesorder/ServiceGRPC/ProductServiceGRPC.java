@@ -23,8 +23,13 @@ public class ProductServiceGRPC {
     //container PORT 
     private static final Integer PORT = 9087;
     
+    // use from local to docker container without compose
+    //private static final String SERVICEURL = "localhost";
+    // use from container to docker container without compose
+    private static final String SERVICEURL = "salesproductapi/Product/";
+    
     public static SalesProductApi.ItemResponse getAllProducts() {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", PORT).usePlaintext().build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(SERVICEURL, PORT).usePlaintext().build();
         SalesProductApi.ProductServiceProtoGrpc.ProductServiceProtoBlockingStub stub = SalesProductApi.ProductServiceProtoGrpc.newBlockingStub(channel);
         SalesProductApi.ItemResponse response = stub.getProducts(SalesProductApi.Empty.newBuilder().build());//.newBuilder().setName("Francisco").build());
         channel.shutdown();
@@ -32,7 +37,7 @@ public class ProductServiceGRPC {
     }
 
     public static SalesProductApi.ProductResponse getById(Integer id) {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", PORT).usePlaintext().build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(SERVICEURL, PORT).usePlaintext().build();
         SalesProductApi.ProductServiceProtoGrpc.ProductServiceProtoBlockingStub stub = SalesProductApi.ProductServiceProtoGrpc.newBlockingStub(channel);
         SalesProductApi.ProductResponse response = stub.getProduct(SalesProductApi.ProductId.newBuilder().setId(id).build());
         channel.shutdown();
@@ -41,7 +46,7 @@ public class ProductServiceGRPC {
 
 
     public static SalesProductApi.UpdateAmountResponse updateAmount(List<ProductDto> dtos) {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", PORT).usePlaintext().build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(SERVICEURL, PORT).usePlaintext().build();
         SalesProductApi.ProductServiceProtoGrpc.ProductServiceProtoBlockingStub stub = SalesProductApi.ProductServiceProtoGrpc.newBlockingStub(channel);
 
         
