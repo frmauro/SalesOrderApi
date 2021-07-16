@@ -24,6 +24,8 @@ curl -X POST -H "Content-Type: application/json" -d '[{"id": 1, "amount": 1, "st
 1  -  "/home/francisco/estudos/java/SalesOrderApi/mvnw" clean -f "/home/francisco/estudos/java/SalesOrderApi/pom.xml"
 2  -  "/home/francisco/estudos/java/SalesOrderApi/mvnw" clean package  -f "/home/francisco/estudos/java/SalesOrderApi/pom.xml"
 3  -  "/home/francisco/estudos/java/SalesOrderApi/mvnw" compile -f "/home/francisco/estudos/java/SalesOrderApi/pom.xml"
+
+## this command put all resources and artfacts necessary to run in another enviroment (how docker)
 4  -  "/home/francisco/estudos/java/SalesOrderApi/mvnw" package spring-boot:repackage -f "/home/francisco/estudos/java/SalesOrderApi/pom.xml"
 
 

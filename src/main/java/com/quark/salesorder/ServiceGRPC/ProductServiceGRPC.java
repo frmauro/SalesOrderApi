@@ -21,15 +21,17 @@ public class ProductServiceGRPC {
     //private static final Integer PORT = 5000;
 
     //container PORT 
-    private static final Integer PORT = 9087;
+    private static final Integer PORT = 8087;
     
     // use from local to docker container without compose
     //private static final String SERVICEURL = "localhost";
     // use from container to docker container without compose
-    private static final String SERVICEURL = "salesproductapi/Product/";
+    private static final String SERVICEURL = "salesproductapi";
     
     public static SalesProductApi.ItemResponse getAllProducts() {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(SERVICEURL, PORT).usePlaintext().build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(SERVICEURL, PORT)
+            .usePlaintext()
+            .build();
         SalesProductApi.ProductServiceProtoGrpc.ProductServiceProtoBlockingStub stub = SalesProductApi.ProductServiceProtoGrpc.newBlockingStub(channel);
         SalesProductApi.ItemResponse response = stub.getProducts(SalesProductApi.Empty.newBuilder().build());//.newBuilder().setName("Francisco").build());
         channel.shutdown();
