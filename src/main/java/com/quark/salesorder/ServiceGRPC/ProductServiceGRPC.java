@@ -21,10 +21,11 @@ public class ProductServiceGRPC {
     //private static final Integer PORT = 5000;
 
     //container PORT 
-    private static final Integer PORT = 8087;
+    private static final Integer PORT = 9090;
     
     // use from local to docker container without compose
-    //private static final String SERVICEURL = "localhost";
+    //private static final String SERVICEURL = "127.0.0.1";
+    //private static final String SERVICEURL = "172.17.0.6";
     // use from container to docker container without compose
     private static final String SERVICEURL = "salesproductapi";
     
