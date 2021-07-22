@@ -46,7 +46,8 @@ public class UserController {
         var email = dto.getEmail();
         var password = dto.getPassword();
         var user = UserServiceGRPC.findByEmailAndPassword(email, password);
-        dtoJson = JSONUtils.covertFromObjectToJson(user);
+        dto.setToken(user.getToken());
+        dtoJson = JSONUtils.covertFromObjectToJson(dto);
         return ResponseEntity.ok().body(dtoJson);
     }
 

@@ -23,7 +23,11 @@ public class UserServiceGRPC {
       public static SalesUserApi.User findByEmailAndPassword(String email, String password) {
           ManagedChannel channel = ManagedChannelBuilder.forAddress(SERVICEURL, PORT).usePlaintext().build();
           SalesUserApi.UserServiceGrpc.UserServiceBlockingStub stub = SalesUserApi.UserServiceGrpc.newBlockingStub(channel);
-          SalesUserApi.User response = stub.findByEmailAndPassword(SalesUserApi.UserEmailPassword.newBuilder().setEmail(email).setPassword(password).build());
+          SalesUserApi.User response = 
+            stub.findByEmailAndPassword(SalesUserApi.UserEmailPassword.newBuilder()
+            .setEmail(email)
+            .setPassword(password)
+            .build());
           channel.shutdown();
           return response;
       }
