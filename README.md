@@ -19,6 +19,10 @@ https://linuxize.com/post/how-to-create-a-mysql-database/
 ## command CURL via POST (updateAmount)
 curl -X POST -H "Content-Type: application/json" -d '[{"id": 1, "amount": 1, "status": "Active", "price": "200"}]' http://localhost:8080/products/
 
+## command CURL via POST (returnByEmailAndPassword)
+curl -X POST -H "Content-Type: application/json" -d '{"id": "1", "email": "frmauro8@gmail.com", "password": "123", "token": ""}' http://localhost:8080/users/
+
+
 
 ## sequence necessary command maven to put package in container docker
 1  -  "/home/francisco/estudos/java/SalesOrderApi/mvnw" clean -f "/home/francisco/estudos/java/SalesOrderApi/pom.xml"
