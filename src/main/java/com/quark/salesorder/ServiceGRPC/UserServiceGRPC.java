@@ -1,4 +1,9 @@
+package com.quark.salesorder.ServiceGRPC;
+
 import org.springframework.stereotype.Service;
+
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 
 @Service
 public class UserServiceGRPC {
@@ -15,11 +20,11 @@ public class UserServiceGRPC {
     //private static final String SERVICEURL = "salesproductapi";
 
 
-    // public static SalesProductApi.ProductResponse getById(Integer id) {
-    //     ManagedChannel channel = ManagedChannelBuilder.forAddress(SERVICEURL, PORT).usePlaintext().build();
-    //     SalesProductApi.ProductServiceProtoGrpc.ProductServiceProtoBlockingStub stub = SalesProductApi.ProductServiceProtoGrpc.newBlockingStub(channel);
-    //     SalesProductApi.ProductResponse response = stub.getProduct(SalesProductApi.ProductId.newBuilder().setId(id).build());
-    //     channel.shutdown();
-    //     return response;
-    // }
+      public static SalesUserApi.User findByEmailAndPassword(String email, String password) {
+          ManagedChannel channel = ManagedChannelBuilder.forAddress(SERVICEURL, PORT).usePlaintext().build();
+          SalesUserApi.UserServiceGrpc.UserServiceBlockingStub stub = SalesUserApi.UserServiceGrpc.newBlockingStub(channel);
+          SalesUserApi.User response = stub.findByEmailAndPassword(SalesUserApi.UserEmailPassword.newBuilder().setEmail(email).setPassword(password).build());
+          channel.shutdown();
+          return response;
+      }
 }

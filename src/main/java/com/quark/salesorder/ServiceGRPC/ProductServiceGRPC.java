@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import com.quark.salesorder.ServiceGRPC.ProductServiceGRPC;
-//import com.quark.salesorder.ProductServiceProtoGrpc.ProductRequest;
-//import com.grpcserver.grpcserver.GrpcserverServiceGrpc;
 import com.quark.salesorder.dtos.ProductDto;
 
 @Service
