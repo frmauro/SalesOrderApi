@@ -14,10 +14,10 @@ public class UserServiceGRPC {
     //private static final Integer PORT = 9090;
     
     // use from local to docker container without compose
-    private static final String SERVICEURL = "localhost";
+    //private static final String SERVICEURL = "localhost";
     //private static final String SERVICEURL = "172.17.0.6";
     // use from container to docker container without compose
-    //private static final String SERVICEURL = "salesproductapi";
+    private static final String SERVICEURL = "salesusernode";
 
 
       public static SalesUserApi.User findByEmailAndPassword(String email, String password) {
