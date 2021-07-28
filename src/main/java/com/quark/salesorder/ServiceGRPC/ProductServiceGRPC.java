@@ -25,7 +25,9 @@ public class ProductServiceGRPC {
     //private static final String SERVICEURL = "127.0.0.1";
     //private static final String SERVICEURL = "172.17.0.6";
     // use from container to docker container without compose
-    private static final String SERVICEURL = "salesproductapi";
+    //private static final String SERVICEURL = "salesproductapi";
+    // use from container to docker container with compose
+    private static final String SERVICEURL = "product-api";
     
     public static SalesProductApi.ItemResponse getAllProducts() {
         ManagedChannel channel = ManagedChannelBuilder.forAddress(SERVICEURL, PORT)
