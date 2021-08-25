@@ -20,8 +20,11 @@ import org.springframework.web.client.RestTemplate;
 public class UserService {
 
 
+      // use link to service kubernetes
+      private static final String SERVICEURL = "http://apiuserhttp:8088/user/";
+
     // use link to docker container with compose
-     private static final String SERVICEURL = "http://user-api:8088/user/";
+     //private static final String SERVICEURL = "http://user-api:8088/user/";
 
      // use from container to docker container without compose
       //private static final String SERVICEURL = "http://salesusernode:8088/user/";

@@ -19,7 +19,10 @@ public class UserServiceGRPC {
     // use from container to docker container without compose
     //private static final String SERVICEURL = "salesusernode";
     // use from container to docker container with compose
-    private static final String SERVICEURL = "user-api";
+    //private static final String SERVICEURL = "user-api";
+    // use for service kubernetes
+    private static final String SERVICEURL = "apiusergrpc";
+    
     
 
 

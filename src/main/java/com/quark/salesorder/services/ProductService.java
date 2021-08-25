@@ -51,11 +51,19 @@ public class ProductService {
 
     //private static final HttpClient client = HttpClient.newBuilder().version(Version.HTTP_2).build();
 
+
     // use link to docker container with compose
-     private static final String SERVICEURL = "http://product-api/Product/";
-     private static final String SERVICEURL2 = "http://product-api/UpdateAmount/";
-     private static final String SERVICEURL3 = "http://product-api/Product/TestPost/";
-     private static final String SERVICEURL4 = "http://product-api/Test/";
+    private static final String SERVICEURL = "http://productapi/Product/";
+    private static final String SERVICEURL2 = "http://productapi/UpdateAmount/";
+    private static final String SERVICEURL3 = "http://productapi/Product/TestPost/";
+    private static final String SERVICEURL4 = "http://productapi/Test/";
+
+
+    // use link to docker container with compose
+    //  private static final String SERVICEURL = "http://product-api/Product/";
+    //  private static final String SERVICEURL2 = "http://product-api/UpdateAmount/";
+    //  private static final String SERVICEURL3 = "http://product-api/Product/TestPost/";
+    //  private static final String SERVICEURL4 = "http://product-api/Test/";
 
     // use link to docker container to local use
     //  private static final String SERVICEURL = "https://localhost:5001/Product/";

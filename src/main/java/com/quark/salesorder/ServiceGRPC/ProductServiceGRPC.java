@@ -27,7 +27,9 @@ public class ProductServiceGRPC {
     // use from container to docker container without compose
     //private static final String SERVICEURL = "salesproductapi";
     // use from container to docker container with compose
-    private static final String SERVICEURL = "product-api";
+    //private static final String SERVICEURL = "product-api";
+    // use for service kubernetes
+    private static final String SERVICEURL = "productapigrpc";
     
     public static SalesProductApi.ItemResponse getAllProducts() {
         ManagedChannel channel = ManagedChannelBuilder.forAddress(SERVICEURL, PORT)
