@@ -11,13 +11,13 @@ public class OrderDto implements Serializable {
     private String description;
     private String moment;
     private Integer orderStatus;
-    private Integer userId;
+    private String userId;
     private Set<OrderItemDto> items = new HashSet<>();
 
     public OrderDto(){
     }
 
-    public OrderDto(Long id, String description, String moment, Integer orderStatus, Integer userId) {
+    public OrderDto(Long id, String description, String moment, Integer orderStatus, String userId) {
         super();
         this.id = id;
         this.description = description;
@@ -59,11 +59,11 @@ public class OrderDto implements Serializable {
         this.orderStatus = orderStatus;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

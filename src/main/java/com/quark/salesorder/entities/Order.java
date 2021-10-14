@@ -36,7 +36,7 @@ public class Order implements Serializable {
     private Instant moment;
     private Integer orderStatus;
     
-    private Integer userId;
+    private String userId;
     
     //@OneToMany(mappedBy = "id.order")
     @ManyToMany(fetch = FetchType.LAZY,
@@ -52,7 +52,7 @@ public class Order implements Serializable {
     public Order(){
     }
 
-    public Order(String description, Instant moment, Integer orderStatus, Integer userId) {
+    public Order(String description, Instant moment, Integer orderStatus, String userId) {
         super();
         this.description = description;
         this.moment = moment;
@@ -93,11 +93,11 @@ public class Order implements Serializable {
         this.orderStatus = orderStatus;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
