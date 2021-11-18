@@ -24,6 +24,10 @@ public class OrdemService {
         return repository.findAll();
     }
 
+    public List<Order> findByUserId(String userId){
+        return repository.findByuserId(userId);
+    }
+
     public Order findById(Long id) {
         Optional<Order> obj = repository.findById(id);
         if (obj.isPresent()) {

@@ -43,6 +43,13 @@ public class OrderController {
         var order = service.findById(id);
 		return ResponseEntity.ok().body(order);
     }
+
+    @CrossOrigin
+    @GetMapping(value = "/{userid}")
+	public ResponseEntity<List<Order>> findByUserId(@PathVariable String userid){
+        List<Order> orders  = service.findByUserId(userid);
+		return ResponseEntity.ok().body(orders);
+    }
     
     @CrossOrigin
     @PostMapping
