@@ -45,7 +45,7 @@ public class OrderController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/{userid}")
+    @GetMapping(value = "findByUserId/{userid}")
 	public ResponseEntity<List<Order>> findByUserId(@PathVariable String userid){
         List<Order> orders  = service.findByUserId(userid);
 		return ResponseEntity.ok().body(orders);
@@ -84,14 +84,14 @@ public class OrderController {
         return entity;
     }
 
-    private List<OrderItem> getOrderItems(OrderDto dto){
-        List<OrderItem> orderItens = new ArrayList<>();
-        for (var i : dto.getItems()){
-            OrderItem orderItem = new OrderItem(i.getDescription(), i.getQuantity(), i.getPrice(), i.getProductId());
-            orderItens.add(orderItem);
-        }
-        return orderItens;
-    }
+    // private List<OrderItem> getOrderItems(OrderDto dto){
+    //     List<OrderItem> orderItens = new ArrayList<>();
+    //     for (var i : dto.getItems()){
+    //         OrderItem orderItem = new OrderItem(i.getDescription(), i.getQuantity(), i.getPrice(), i.getProductId());
+    //         orderItens.add(orderItem);
+    //     }
+    //     return orderItens;
+    // }
 
     private OrderDto convertOrderToOrderDto(Order entity){
         var dto = new OrderDto(entity.getId(), entity.getDescription(), entity.getMoment().toString(), entity.getOrderStatus(), entity.getUserId());
