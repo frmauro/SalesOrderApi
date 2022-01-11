@@ -9,7 +9,7 @@ service OrderServiceProto {
     // get all orders
     rpc GetOrders (Empty) returns (ItemResponse);
     // get order by id
-    rpc GetProduct (OrderId) returns (OrderResponse);
+    rpc GetOrder (OrderId) returns (OrderResponse);
     // update order
     rpc UpdateOrder (OrderRequest) returns (OrderReply);
 }
