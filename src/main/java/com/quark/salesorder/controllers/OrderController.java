@@ -9,6 +9,7 @@ import com.quark.salesorder.dtos.OrderDto;
 import com.quark.salesorder.dtos.OrderItemDto;
 import com.quark.salesorder.entities.Order;
 import com.quark.salesorder.entities.OrderItem;
+import com.quark.salesorder.helpers.EntityHelper;
 import com.quark.salesorder.services.OrdemService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,11 +55,12 @@ public class OrderController {
     @CrossOrigin
     @PostMapping
 	public ResponseEntity<OrderDto> insert(@RequestBody OrderDto dto){
-        var entity = convertOrderDtoToOrder(dto);
+        var entityHelper = new EntityHelper();
+        var entity = entityHelper.convertOrderDtoToOrder(dto);
         service.insert(entity);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
-        dto = convertOrderToOrderDto(entity);
+        dto = entityHelper.convertOrderToOrderDto(entity);
 		return ResponseEntity.created(uri).body(dto);
     }
     
@@ -70,43 +72,6 @@ public class OrderController {
         service.update(order);
 		return ResponseEntity.ok().body(dto);
     }
-    
-    //private methods *************************
-    private Order convertOrderDtoToOrder(OrderDto dto){
-        var entity = new Order(dto.getDescription(), Instant.parse("2020-07-20T19:53:07Z"), dto.getOrderStatus(), dto.getUserId());
-        var items = dto.getItems();
-
-        for (var i : items){
-            OrderItem orderItem = new OrderItem(i.getDescription(), i.getQuantity(), i.getPrice(), i.getProductId());
-            orderItem.getOrders().add(entity);
-            entity.getItems().add(orderItem);
-        }
-        return entity;
-    }
-
-    // private List<OrderItem> getOrderItems(OrderDto dto){
-    //     List<OrderItem> orderItens = new ArrayList<>();
-    //     for (var i : dto.getItems()){
-    //         OrderItem orderItem = new OrderItem(i.getDescription(), i.getQuantity(), i.getPrice(), i.getProductId());
-    //         orderItens.add(orderItem);
-    //     }
-    //     return orderItens;
-    // }
-
-    private OrderDto convertOrderToOrderDto(Order entity){
-        var dto = new OrderDto(entity.getId(), entity.getDescription(), entity.getMoment().toString(), entity.getOrderStatus(), entity.getUserId());
-        List<OrderItemDto> orderItensDto = new ArrayList<>();
-        var items = entity.getItems();
-
-        for (var i : items){
-            OrderItemDto orderItemDto = new OrderItemDto(i.getDescription(), i.getQuantity(), i.getPrice(), i.getProductId());
-            orderItemDto.setId(entity.getId());
-            orderItensDto.add(orderItemDto);
-        }
-        dto.getItems().addAll(orderItensDto);
-        return dto;
-    }
-
-
+   
 
 }

@@ -1,9 +1,11 @@
 package com.quark.salesorder.ServiceGRPC;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.quark.salesorder.entities.Order;
+import com.quark.salesorder.entities.OrderItem;
 import com.quark.salesorder.repositories.OrderItemRepository;
 import com.quark.salesorder.repositories.OrderRepository;
 
@@ -27,7 +29,25 @@ public class OrderServiceGRPC extends SalesOrderApi.OrderServiceProtoGrpc.OrderS
    @Autowired
    private OrderItemRepository orderItemrepository;
 
-   public void SendOrder(OrderRequest request, StreamObserver<OrderReply> responseObserver) {
+   @Override
+   public void sendOrder(OrderRequest request, StreamObserver<OrderReply> responseObserver) {
+
+      var order = new Order();
+      order.setDescription(request.getDescription());
+      order.setMoment(Instant.parse("2020-07-20T19:53:07Z"));
+      order.setOrderStatus(Integer.parseInt(request.getStatus()));
+      order.setUserId(request.getUserid());
+      var itemsOrderRequest = request.getItems();
+      var items = itemsOrderRequest.getItemsList();
+      for (var i : items) {
+         OrderItem orderItem = new OrderItem(i.getDescription(), i.getQuantity(), Double.parseDouble(i.getPrice()),
+               i.getProductId());
+         orderItem.getOrders().add(order);
+         order.getItems().add(orderItem);
+      }
+
+      //var entity = repository.save(order);
+
       Integer id = 2;
       OrderReply reply = OrderReply.newBuilder().setId(id).build();
       responseObserver.onNext(reply);
@@ -75,18 +95,33 @@ public class OrderServiceGRPC extends SalesOrderApi.OrderServiceProtoGrpc.OrderS
    }
 
    @Override
-   public void getOrder(OrderId orderId, StreamObserver<OrderResponse> responseObserver) 
-   {
+   public void getOrder(OrderId orderId, StreamObserver<OrderResponse> responseObserver) {
 
       var orderDb = repository.findById((long) orderId.getId());
       var orderItemDb = orderItemrepository.findByOrderId(orderId.getId());
-      
+
+      var itemsOrder = new ArrayList<ItemOrderResponse>();
+
+      for (OrderItem orderitem : orderItemDb) {
+         itemsOrder.add(ItemOrderResponse.newBuilder()
+               .setId(orderitem.getId().intValue())
+               .setDescription(orderitem.getDescription())
+               .setPrice(orderitem.getPrice().toString())
+               .setProductId(orderitem.getProductId())
+               .setQuantity(orderitem.getQuantity())
+               .build());
+      }
+
+      var itemsOrderResponse = ItemsOrderResponse.newBuilder().addAllItems(itemsOrder).build();
+
       var reply = OrderResponse.newBuilder()
             .setId(orderDb.get().getId().intValue())
             .setDescription(orderDb.get().getDescription())
             .setMoment(orderDb.get().getMoment().toString())
             .setStatus(orderDb.get().getOrderStatus().toString())
-            .setUserid(orderDb.get().getUserId()).build();
+            .setUserid(orderDb.get().getUserId())
+            .setItems(itemsOrderResponse)
+            .build();
 
       responseObserver.onNext(reply);
       responseObserver.onCompleted();
