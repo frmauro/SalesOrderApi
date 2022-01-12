@@ -24,6 +24,8 @@ import net.devh.boot.grpc.server.service.GrpcService;
 public class OrderServiceGRPC extends SalesOrderApi.OrderServiceProtoGrpc.OrderServiceProtoImplBase {
    @Autowired
    private OrderRepository repository;
+   @Autowired
+   private OrderItemRepository orderItemrepository;
 
    public void SendOrder(OrderRequest request, StreamObserver<OrderReply> responseObserver) {
       Integer id = 2;
@@ -77,6 +79,8 @@ public class OrderServiceGRPC extends SalesOrderApi.OrderServiceProtoGrpc.OrderS
    {
 
       var orderDb = repository.findById((long) orderId.getId());
+      var orderItemDb = orderItemrepository.findByOrderId(orderId.getId());
+      
       var reply = OrderResponse.newBuilder()
             .setId(orderDb.get().getId().intValue())
             .setDescription(orderDb.get().getDescription())
