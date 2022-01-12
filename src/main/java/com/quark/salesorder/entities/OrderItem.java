@@ -34,8 +34,7 @@ public class OrderItem implements Serializable {
     
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE
+                CascadeType.ALL
             },
             mappedBy = "items")
     @JsonIgnore            
