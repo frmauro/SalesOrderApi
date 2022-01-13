@@ -34,7 +34,7 @@ public class OrderServiceGRPC extends SalesOrderApi.OrderServiceProtoGrpc.OrderS
 
       var order = new Order();
       order.setDescription(request.getDescription());
-      order.setMoment(Instant.parse("2020-07-20T19:53:07Z"));
+      order.setMoment(Instant.now());
       order.setOrderStatus(Integer.parseInt(request.getStatus()));
       order.setUserId(request.getUserid());
       var itemsOrderRequest = request.getItems();
@@ -46,10 +46,40 @@ public class OrderServiceGRPC extends SalesOrderApi.OrderServiceProtoGrpc.OrderS
          order.getItems().add(orderItem);
       }
 
-      //var entity = repository.save(order);
+      var entity = repository.save(order);
 
-      Integer id = 2;
+      Integer id = entity.getId().intValue();
       OrderReply reply = OrderReply.newBuilder().setId(id).build();
+      responseObserver.onNext(reply);
+      responseObserver.onCompleted();
+   }
+
+   @Override
+   public void updateOrder(OrderRequest request, StreamObserver<OrderReply> responseObserver) {
+      Integer id = request.getId();
+      var order = repository.findById(Long.parseLong(id.toString())).get();
+      order.setDescription(request.getDescription());
+      order.setMoment(Instant.now());
+      order.setOrderStatus(Integer.parseInt(request.getStatus()));
+      order.setUserId(request.getUserid());
+
+
+      var itemsOrderRequest = request.getItems();
+      var items = itemsOrderRequest.getItemsList();
+      for (var item : items) {
+         long currentItemId = item.getId();
+         var optionalOrderItem = orderItemrepository.findById(currentItemId);
+         var orderItemDb = optionalOrderItem.get();
+         orderItemDb.setDescription(item.getDescription());
+         orderItemDb.setQuantity(item.getQuantity());
+         orderItemDb.setPrice(Double.parseDouble(item.getPrice()));
+         orderItemDb.setProductId(item.getProductId());
+         orderItemrepository.save(orderItemDb);
+      }
+
+      var entity = repository.save(order);
+
+      OrderReply reply = OrderReply.newBuilder().setId(entity.getId().intValue()).build();
       responseObserver.onNext(reply);
       responseObserver.onCompleted();
    }
@@ -64,17 +94,17 @@ public class OrderServiceGRPC extends SalesOrderApi.OrderServiceProtoGrpc.OrderS
       var itemsOrder = new ArrayList<ItemOrderResponse>();
 
       for (Order order : orders) {
-         // var orderItens = orderItemrepository.findByOrder(order);
-         var orderItens = order.getItems();
-         // for (OrderItem orderitem : orderItens) {
-         // itemsOrder.add(ItemOrderResponse.newBuilder()
-         // .setId(orderitem.getId().intValue())
-         // .setDescription(orderitem.getDescription())
-         // .setPrice(orderitem.getPrice().toString())
-         // .setProductId(orderitem.getProductId())
-         // .setQuantity(orderitem.getQuantity())
-         // .build());
-         // }
+         var orderItemDb = orderItemrepository.findByOrderId(order.getId().intValue());
+
+         for (OrderItem orderitem : orderItemDb) {
+            itemsOrder.add(ItemOrderResponse.newBuilder()
+                  .setId(orderitem.getId().intValue())
+                  .setDescription(orderitem.getDescription())
+                  .setPrice(orderitem.getPrice().toString())
+                  .setProductId(orderitem.getProductId())
+                  .setQuantity(orderitem.getQuantity())
+                  .build());
+         }
          var itemsOrderResponse = ItemsOrderResponse.newBuilder().addAllItems(itemsOrder).build();
 
          ordersResponse.add(OrderResponse.newBuilder()
