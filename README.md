@@ -37,6 +37,8 @@ curl -X POST -H "Content-Type: application/json" -d '{"id": 0, "description": "O
 
 
 
-
-
+## Quaries my sql
+delete from order_orderitem where order_id in (5, 6, 7);
+delete from tb_order_item where id in (5, 6, 7);
+delete from tb_order where id in (5, 6, 7);
 
