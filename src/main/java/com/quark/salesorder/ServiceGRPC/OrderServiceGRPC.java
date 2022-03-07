@@ -91,10 +91,10 @@ public class OrderServiceGRPC extends SalesOrderApi.OrderServiceProtoGrpc.OrderS
       List<Order> orders = repository.findAll();
 
       var ordersResponse = new ArrayList<SalesOrderApi.OrderResponse>();
-      var itemsOrder = new ArrayList<ItemOrderResponse>();
 
       for (Order order : orders) {
          var orderItemDb = orderItemrepository.findByOrderId(order.getId().intValue());
+         var itemsOrder = new ArrayList<ItemOrderResponse>();
 
          for (OrderItem orderitem : orderItemDb) {
             itemsOrder.add(ItemOrderResponse.newBuilder()
