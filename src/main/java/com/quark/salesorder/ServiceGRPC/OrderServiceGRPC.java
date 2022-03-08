@@ -63,7 +63,6 @@ public class OrderServiceGRPC extends SalesOrderApi.OrderServiceProtoGrpc.OrderS
       order.setOrderStatus(Integer.parseInt(request.getStatus()));
       order.setUserId(request.getUserid());
 
-
       var itemsOrderRequest = request.getItems();
       var items = itemsOrderRequest.getItemsList();
       for (var item : items) {
@@ -117,6 +116,7 @@ public class OrderServiceGRPC extends SalesOrderApi.OrderServiceProtoGrpc.OrderS
                .build());
 
       }
+
 
       ItemResponse reply = ItemResponse.newBuilder().addAllItems(ordersResponse).build();
 
