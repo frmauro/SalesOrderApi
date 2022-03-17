@@ -19,6 +19,7 @@ import SalesOrderApi.ItemsOrderResponse;
 import SalesOrderApi.OrderReply;
 import SalesOrderApi.OrderRequest;
 import SalesOrderApi.OrderResponse;
+import SalesOrderApi.UserId;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 
@@ -117,7 +118,6 @@ public class OrderServiceGRPC extends SalesOrderApi.OrderServiceProtoGrpc.OrderS
 
       }
 
-
       ItemResponse reply = ItemResponse.newBuilder().addAllItems(ordersResponse).build();
 
       responseObserver.onNext(reply);
@@ -152,6 +152,48 @@ public class OrderServiceGRPC extends SalesOrderApi.OrderServiceProtoGrpc.OrderS
             .setUserid(orderDb.get().getUserId())
             .setItems(itemsOrderResponse)
             .build();
+
+      responseObserver.onNext(reply);
+      responseObserver.onCompleted();
+   }
+
+   @Override
+   public void getOrderByUserId(UserId userId, StreamObserver<ItemResponse> responseObserver) {
+
+      var ordersDb = repository.findByuserId(userId.getId());
+      ArrayList<ItemOrderResponse> itemsOrder = null;
+      var  replies = new ArrayList<OrderResponse>();
+
+      for (Order orderDb : ordersDb) {
+
+         var orderItemsDb = orderItemrepository.findByOrderId(orderDb.getId().intValue());
+
+         itemsOrder = new ArrayList<ItemOrderResponse>();
+
+         for (OrderItem orderitem : orderItemsDb) {
+            itemsOrder.add(ItemOrderResponse.newBuilder()
+                  .setId(orderitem.getId().intValue())
+                  .setDescription(orderitem.getDescription())
+                  .setPrice(orderitem.getPrice().toString())
+                  .setProductId(orderitem.getProductId())
+                  .setQuantity(orderitem.getQuantity())
+                  .build());
+         }
+
+         var itemsOrderResponse = ItemsOrderResponse.newBuilder().addAllItems(itemsOrder).build();
+
+         replies.add(OrderResponse.newBuilder()
+               .setId(orderDb.getId().intValue())
+               .setDescription(orderDb.getDescription())
+               .setMoment(orderDb.getMoment().toString())
+               .setStatus(orderDb.getOrderStatus().toString())
+               .setUserid(orderDb.getUserId())
+               .setItems(itemsOrderResponse)
+               .build());
+
+      }
+
+      ItemResponse reply = ItemResponse.newBuilder().addAllItems(replies).build();
 
       responseObserver.onNext(reply);
       responseObserver.onCompleted();
