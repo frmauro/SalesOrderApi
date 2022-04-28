@@ -33,6 +33,6 @@ docker build -t orderapi .
 echo "built docker images and proceeding to delete existing container"
 echo "Deploying the updated container"
 
-docker run --name orderapi -d -p 8080:8080 -p 9092:9092 --link mysqlserver orderapi
+docker run --name orderapi -d -p 8080:8080 -p 9093:9093 --link mysqlserver orderapi
 
 echo "Deploying the container"
