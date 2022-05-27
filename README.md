@@ -43,3 +43,41 @@ delete from order_orderitem where order_id in (5, 6, 7);
 delete from tb_order_item where id in (5, 6, 7);
 delete from tb_order where id in (5, 6, 7);
 
+
+
+
+## ****************   configs databases   **************************
+# DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+#spring.datasource.url=jdbc:mysql://${MYSQL_HOST:dbmysql}:3306/orderapi
+
+
+#DEV test
+#spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:3306/orderapi
+
+spring.datasource.url=jdbc:mysql://${MYSQL_HOST:mysqlserver}:3306/orderapi
+
+#spring.datasource.url=jdbc:mysql://${MYSQL_HOST:dbmysql}:3306/orderapi
+
+#minikube test
+# spring.datasource.url=jdbc:mysql://orderdb:3306/orderapi?useSSL=false
+# spring.datasource.username=dbuser
+# spring.datasource.password=admin
+
+#Localhost test
+  spring.datasource.username=root
+  spring.datasource.password=123
+
+#grpc server port
+grpc.server.port=9093
+
+# Hibernate
+
+# The SQL dialect makes Hibernate generate better SQL for the chosen database
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+
+# Hibernate ddl auto (create, create-drop, validate, update)
+spring.jpa.hibernate.ddl-auto = update
+
+logging.level.org.hibernate.SQL=DEBUG
+logging.level.org.hibernate.type=TRACE
+
